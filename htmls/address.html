@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background-color: #41CEA9;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #FFFFFF;"></a>
+			<h1 class="mui-title" style="color: #FFFFFF;">收获地址</h1>
+			<a id="plus_addr" class="mui-icon mui-icon-plusempty mui-pull-right" style="color: #FFFFFF;"></a>
+		</header>
+		<div class="mui-content">
+			<ul id="OA_task_1" class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+
+			</ul>
+		</div>
+
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function() {
+
+				document.getElementById("plus_addr").addEventListener('tap', function() {
+					mui.openWindow({
+						url: 'add_address.html',
+						createNew: true
+					});
+				});
+
+				//				console.log(localStorage.getItem("u_id"));
+				var u_id = localStorage.getItem("u_id");
+
+				mui.ajax('http://api.msyc.com.cn/api/addr/users/' + u_id + '', {
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(mdata) {
+						if(mdata == "") {
+							mui.toast("暂无收获地址，点击右上角添加收获地址！");
+						} else {
+							var table = document.body.querySelector('#OA_task_1');
+							for(var i = 0; i < mdata.addrs.length; i++) {
+								var li = document.createElement('li');
+								li.className = 'mui-table-view-cell';
+								li.id = mdata.addrs[i].id;
+
+								li.innerHTML = '<div class="mui-slider-right mui-disabled">' +
+									'<a class="mui-btn mui-btn-red">删除</a>' +
+									'</div>' +
+									'<div class="mui-slider-handle">' +
+									'<div class="mui-table">' +
+									'<div class="mui-table-cell mui-col-xs-10">' +
+									'<p class="mui-h5 mui-ellipsis">' +
+									'<span>收货人：<span>' + mdata.addrs[i].username + '</span></span>' +
+									'</p>' +
+									'<p class="mui-h5 mui-ellipsis">' +
+									'<span>省市区：<span>' + mdata.addrs[i].prov + '</span>&nbsp;<span>' + mdata.addrs[i].city + '</span>&nbsp;<span>' + mdata.addrs[i].country + '</span></span>' +
+									'</p>' +
+									'<p class="mui-h5 mui-ellipsis">' +
+									'<span>详细地址：<span>' + mdata.addrs[i].addr + '</span></span>' +
+									'</p>' +
+									'</div>' +
+									'</div>' +
+									'</div>';
+
+								table.appendChild(li);
+							}
+						}
+					},
+					error: function(xhr, type, errorThrown) { //异常处理；
+						console.log(type);
+					}
+				});
+
+				//	修改收获地址页面
+				mui('#OA_task_1').on('tap', '.mui-table-view-cell',
+					function() {
+						var id = this.getAttribute('id');
+						//						mui.toast(id);
+						//	打开修改收获地址页面
+						mui.openWindow({
+							url: 'edit_address.html',
+							id: 'edit_address.html',
+							extras: {
+								addrid: id
+							},
+							createNew: true
+						});
+					});
+
+			});
+
+			//	删除收获地址
+			(function($) {
+				$('#OA_task_1').on('tap', '.mui-btn', function(event) {
+					var elem = this;
+					var li = elem.parentNode.parentNode;
+					mui.confirm('确认删除该条收获地址？', '骑境商城', btnArray, function(e) {
+						if(e.index == 0) {
+							//	删除操作
+							var addrid = li.id;
+
+							mui.ajax('http://api.msyc.com.cn/api/addr/del/' + addrid + '', {
+								dataType: 'json', //服务器返回json格式数据
+								type: 'get', //HTTP请求类型
+								timeout: 10000, //超时时间设置为10秒；
+								headers: {
+									'Content-Type': 'application/json'
+								},
+								success: function(mdata) {
+									if(mdata.status == "success") {
+										li.parentNode.removeChild(li);
+										mui.toast("删除成功！");
+									} else {
+										mui.toast(mdata.data.msg);
+									}
+									$.swipeoutClose(li);
+
+								},
+								error: function(xhr, type, errorThrown) {
+									//异常处理；
+									mui.toast("删除失败，请稍后再试。。");
+									console.log(type);
+								}
+							});
+
+						} else {
+							setTimeout(function() {
+								$.swipeoutClose(li);
+							}, 0);
+						}
+					});
+				});
+				var btnArray = ['确认', '取消'];
+			})(mui);
+		</script>
+	</body>
+
+</html>

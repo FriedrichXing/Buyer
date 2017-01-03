@@ -1,0 +1,214 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/mui.picker.css" />
+		<link rel="stylesheet" href="../css/mui.poppicker.css" />
+
+		<style type="text/css">
+			.mui-input-group {
+				margin-top: 15px;
+			}
+			
+			.addr_text {
+				line-height: 40px;
+			}
+			
+			.mui-switch {
+				float: right;
+				margin-top: 15px;
+				margin-right: 15px;
+			}
+			
+			.default_text {
+				margin-top: 10px;
+				margin-left: 15px;
+			}
+			
+			.mui-switch:before {
+				content: '否';
+			}
+			
+			.mui-switch.mui-active:before {
+				content: '是';
+			}
+			
+			.mui-switch.mui-active {
+				border-color: #41CEA9;
+				background-color: #41CEA9;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background-color: #41CEA9;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #FFFFFF;"></a>
+			<h1 class="mui-title" style="color: #FFFFFF;">添加收获地址</h1>
+			<a id="confirm" class="mui-icon mui-icon-checkmarkempty mui-pull-right" style="color: #FFFFFF;"></a>
+		</header>
+		<div class="mui-content">
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>收货人</label>
+					<input id="username" type="text" class="mui-input-clear" placeholder="请输入收货人姓名">
+				</div>
+			</form>
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>电话</label>
+					<input id="phone" type="text" class="mui-input-clear" placeholder="请输入收货人电话">
+				</div>
+			</form>
+
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>省市区</label>
+					<span class="addr_text" id='prov'>请选择省市区</span>&nbsp;<span id="city"></span>&nbsp;<span id="country"></span>
+				</div>
+			</form>
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>详细地址</label>
+					<input id="addr" type="text" class="mui-input-clear" placeholder="请输入详细地址">
+				</div>
+			</form>
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>邮编</label>
+					<input id="zipcode" type="text" class="mui-input-clear" placeholder="请输入邮政编码">
+				</div>
+			</form>
+
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>默认地址</label>
+					<div id="isDefault" class="mui-switch">
+						<div class="mui-switch-handle"></div>
+					</div>
+				</div>
+			</form>
+
+		</div>
+
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript" src="../js/city.data-3.js"></script>
+		<script type="text/javascript" src="../js/city.data.js"></script>
+		<script type="text/javascript" src="../js/mui.picker.js"></script>
+		<script type="text/javascript" src="../js/mui.poppicker.js"></script>
+		<script type="text/javascript">
+			mui.init();
+
+			mui.plusReady(function() {
+				var isdefault = 0;
+					document.getElementById("isDefault").addEventListener("toggle", function(event) {
+						if(event.detail.isActive) {
+							isdefault = 1;
+						} else {
+							isdefault = 0;
+						}
+					});
+
+				document.getElementById("confirm").addEventListener('tap', function() {
+					var username = document.getElementById("username").value;
+					var phone = document.getElementById("phone").value;
+					var prov = document.getElementById("prov").innerHTML;
+					var city = document.getElementById("city").innerHTML;
+					var country = document.getElementById("country").innerHTML;
+					var addr = document.getElementById("addr").value;
+					var zipcode = document.getElementById("zipcode").value;
+					
+//					mui.toast(isdefault+"aa");
+					var user_id = localStorage.getItem("u_id");
+					//	添加收获地址请求
+					mui.ajax('http://api.msyc.com.cn/api/addr', {
+						data: {
+							user_id: user_id,
+							username: username,
+							isdefault: isdefault,
+							phone: phone,
+							zipcode: zipcode,
+							prov: prov,
+							city: city,
+							country: country,
+							addr: addr,
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						success: function(mdata) {
+
+							if(mdata.status == "success") {
+								mui.toast("添加收获地址成功！");
+
+								mui.openWindow({
+									url: 'address.html',
+									createNew: true
+								});
+							} else {
+								mui.toast(mdata.error.msg);
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							//异常处理；
+							console.log(type);
+						}
+					});
+				});
+
+			});
+
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+
+					//	省市区选择
+					var cityPicker3 = new $.PopPicker({
+						layer: 3
+					});
+					cityPicker3.setData(cityData3);
+					var showCityPickerButton = doc.getElementById('prov');
+					var city = doc.getElementById('city');
+					var country = doc.getElementById('country');
+					showCityPickerButton.addEventListener('tap', function(event) {
+						cityPicker3.show(function(items) {
+							showCityPickerButton.innerHTML = (items[0] || {}).text;
+							city.innerHTML = (items[1] || {}).text;
+							country.innerHTML = (items[2] || {}).text;
+
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}, false);
+					city.addEventListener('tap', function(event) {
+						cityPicker3.show(function(items) {
+							showCityPickerButton.innerHTML = (items[0] || {}).text;
+							city.innerHTML = (items[1] || {}).text;
+							country.innerHTML = (items[2] || {}).text;
+
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}, false);
+					country.addEventListener('tap', function(event) {
+						cityPicker3.show(function(items) {
+							showCityPickerButton.innerHTML = (items[0] || {}).text;
+							city.innerHTML = (items[1] || {}).text;
+							country.innerHTML = (items[2] || {}).text;
+
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}, false);
+				});
+			})(mui, document);
+		</script>
+	</body>
+
+</html>

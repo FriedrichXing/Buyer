@@ -1,0 +1,266 @@
+{
+  "htmls/pageOne_main.html": {
+    "resources": [
+      "fonts/mui-icons-extra.ttf",
+      "images/2.png",
+      "images/3.png",
+      "images/1.png",
+      "images/4.png",
+      "htmls/pageOne_sub.html",
+      "css/icons-extra.css",
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ],
+    "refer": [
+      "htmls/pageOne_sub2.html",
+      "htmls/pageOne_sub3.html",
+      "htmls/pageOne_sub.html"
+    ]
+  },
+  "htmls/main.html": {
+    "resources": [
+      "htmls/pageTwo.html",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "htmls/pageOne_main.html",
+      "css/icons-extra.css",
+      "fonts/mui-icons-extra.ttf",
+      "images/2.png",
+      "images/3.png",
+      "images/1.png",
+      "images/4.png",
+      "htmls/pageOne_sub.html",
+      "images/aaa.jpg",
+      "htmls/pageOne_sub3.html"
+    ],
+    "refer": [
+      "htmls/pageFour.html",
+      "htmls/pageTwo.html",
+      "htmls/pageThree.html",
+      "htmls/pageOne_main.html",
+      "htmls/pageOne_sub2.html",
+      "htmls/pageOne_sub3.html",
+      "htmls/pageOne_sub.html",
+      "htmls/goodDetail.html",
+      "htmls/goods_all_main.html",
+      "htmls/goods_tui_main.html",
+      "htmls/goods_te_main.html"
+    ]
+  },
+  "htmls/pageOne_sub.html": {
+    "refer": [
+      "htmls/goodDetail.html"
+    ],
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ]
+  },
+  "htmls/goodDetail.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "images/1.png",
+      "images/4.png",
+      "images/aaa.jpg"
+    ],
+    "refer": [
+      "htmls/order_submit.html"
+    ]
+  },
+  "htmls/pageOne_sub2.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": [
+      "htmls/goodDetail.html"
+    ]
+  },
+  "htmls/pageOne_sub3.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": [
+      "htmls/goodDetail.html"
+    ]
+  },
+  "htmls/pageTwo.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ]
+  },
+  "htmls/pageThree.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "images/aaa.jpg"
+    ],
+    "refer": [
+      "htmls/news_info.html"
+    ]
+  },
+  "htmls/news_info.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ]
+  },
+  "htmls/pageFour.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "images/bg.jpg"
+    ],
+    "refer": [
+      "htmls/login.html",
+      "htmls/address.html",
+      "htmls/my_orders_main.html"
+    ]
+  },
+  "htmls/login.html": {
+    "refer": [
+      "htmls/register.html",
+      "htmls/main.html",
+      "htmls/pageOne_sub2.html",
+      "htmls/pageOne_sub3.html",
+      "htmls/pageOne_sub.html"
+    ],
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ]
+  },
+  "htmls/register.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ]
+  },
+  "htmls/goods_all_main.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "htmls/goods_all_sub.html"
+    ],
+    "refer": [
+      "htmls/goods_all_sub.html"
+    ]
+  },
+  "htmls/goods_tui_main.html": {
+    "resources": [
+      "htmls/goods_tui_sub.html",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": [
+      "htmls/goods_tui_sub.html"
+    ]
+  },
+  "htmls/goods_all_sub.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": [
+      "htmls/goodDetail.html"
+    ]
+  },
+  "htmls/goods_te_main.html": {
+    "resources": [
+      "htmls/goods_te_sub.html",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": [
+      "htmls/goods_te_sub.html"
+    ]
+  },
+  "htmls/goods_te_sub.html": {
+    "resources": [
+      "js/mui.min.js"
+    ]
+  },
+  "htmls/address.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": [
+      "htmls/edit_address.html"
+    ]
+  },
+  "htmls/edit_address.html": {
+    "resources": [
+      "js/mui.picker.js",
+      "js/mui.min.js",
+      "js/mui.poppicker.js",
+      "js/city.data.js",
+      "css/mui.poppicker.css",
+      "css/mui.picker.css",
+      "js/city.data-3.js"
+    ],
+    "refer": [
+      "htmls/address.html"
+    ]
+  },
+  "htmls/order_submit.html": {
+    "refer": [
+      "htmls/address.html",
+      "htmls/online_pay.html"
+    ],
+    "resources": [
+      "images/aaa.jpg",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/mui.picker.js",
+      "js/mui.poppicker.js",
+      "css/mui.poppicker.css",
+      "css/mui.picker.css"
+    ]
+  },
+  "htmls/online_pay.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ]
+  },
+  "htmls/my_orders_sub.html": {
+    "resources": [
+      "images/aaa.jpg",
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ]
+  },
+  "htmls/my_orders_main.html": {
+    "resources": [
+      "htmls/my_orders_sub.html",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": [
+      "htmls/my_orders_sub.html"
+    ]
+  }
+}

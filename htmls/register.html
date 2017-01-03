@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+
+		<style type="text/css">
+			.mui-input-row label {
+				width: 20%;
+				padding: 0px;
+				line-height: 3;
+				padding-left: 15px;
+			}
+			
+			.mui-input-row label~input {
+				width: 80%;
+			}
+			
+			.mui-btn-green,
+			.mui-btn-positive,
+			.mui-btn-success {
+				border: 1px solid #41CEA9;
+				background-color: #41CEA9;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background-color: #41CEA9;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #FFFFFF;"></a>
+			<h1 class="mui-title" style="color: #FFFFFF;">注册</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-card" style="margin-top: 20px;">
+				<form class="mui-input-group">
+					<div class="mui-input-row">
+						<label><span class="mui-icon mui-icon-person"></span></label>
+						<input id="username" type="text" class="mui-input-clear" placeholder="请输入用户名" />
+					</div>
+					<div class="mui-input-row">
+						<label><span class="mui-icon mui-icon-email"></span></label>
+						<input id="email" type="text" class="mui-input-clear" placeholder="请输入邮箱" />
+					</div>
+					<div class="mui-input-row">
+						<label><span class="mui-icon mui-icon-locked"></span></label>
+						<input id="password" type="password" class="mui-input-clear" placeholder="请输入密码" />
+					</div>
+					<div class="mui-input-row">
+						<label><span class="mui-icon mui-icon-checkmarkempty"></span></label>
+						<input id="password_confirm" type="password" class="mui-input-clear" placeholder="请再次输入密码" />
+					</div>
+				</form>
+			</div>
+			<div class="mui-button-row" style="margin: 10px 15px;">
+				<button id="register" type="button" class="mui-btn mui-btn-green  mui-btn-block " style="padding: 5px 0px;">立即注册</button>
+			</div>
+		</div>
+
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+
+			mui.plusReady(function() {
+				document.getElementById("register").addEventListener('tap', function() {
+					
+					//	注册请求
+					mui.ajax('http://api.msyc.com.cn/api/user/register', {
+						data: {
+							username: document.getElementById("username").value,
+							email:document.getElementById("email").value,
+							pwd:document.getElementById("password_confirm").value
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						success: function(mdata) {
+
+							if(mdata.status == "success") {
+								mui.toast("注册成功！请重新登录");
+
+								//	注册成功跳转到登录页面
+								mui.openWindow({
+									url: 'login.html',
+									id: 'login.html',
+								});
+							} else {
+								mui.toast(mdata.error.msg);
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							//异常处理；
+							console.log(type);
+						}
+					});
+				});
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,183 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+
+		<style type="text/css">
+			.mui-content {
+				padding-top: -1px;
+				margin-top: -1px;
+			}
+			
+			.headImg {
+				padding: 15% 0px 8% 0px;
+				/*background: url(../images/bg.jpg);*/
+				background-color: #41CEA9;
+				background-position: center center;
+				background-size: 100% auto;
+			}
+			
+			.touxiang {
+				text-align: center;
+				padding-top: 20px;
+			}
+			
+			.touxiang div {
+				width: 4em;
+				height: 4em;
+				padding: 0px;
+				border-radius: 50%;
+				border: 2px solid white;
+				/*color: gray;*/
+				margin: 0px auto;
+				margin-bottom: 10px;
+			}
+			
+			#username {
+				color: #FFFFFF;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<div class="headImg">
+				<div class="touxiang">
+					<div>
+						<span id="touxiangimg" class="mui-icon mui-icon-person" style="font-size: 3.8em; color: white;"></span>
+					</div>
+					<span id="username">用户名</span>
+				</div>
+			</div>
+
+			<ul class="mui-table-view" style="margin-top: 10px;">
+				<li id="my_orders" class="mui-table-view-cell">
+					<a class="mui-navigate-right">
+						<span class="mui-icon iconfont icon-wodedingdan"></span> 我的订单
+					</a>
+				</li>
+				<li id="address" class="mui-table-view-cell">
+					<a class="mui-navigate-right">
+						<span class="mui-icon iconfont icon-dizhi"></span> 收获地址
+					</a>
+				</li>
+			</ul>
+
+			<ul class="mui-table-view" style="margin-top: 10px;">
+				<li id="joinIn" class="mui-table-view-cell">
+					<a class="mui-navigate-right">
+						<span class="mui-icon iconfont icon-wodedingdan"></span> 加盟我们
+					</a>
+				</li>
+				<li id="chat_online" class="mui-table-view-cell">
+					<a class="mui-navigate-right">
+						<span class="mui-icon iconfont icon-dizhi"></span> 在线聊天
+					</a>
+				</li>
+			</ul>
+
+			<ul class="mui-table-view" style="margin-top: 10px;">
+				<li id="feedback" class="mui-table-view-cell">
+					<a class="mui-navigate-right">
+						<span class="mui-icon iconfont icon-dizhi"></span> 用户反馈
+					</a>
+				</li>
+			</ul>
+
+			<ul id="logoutBtn" class="mui-table-view" style="margin-top: 20px;margin-bottom: 20px;">
+				<li class="mui-table-view-cell" style="text-align: center;">
+					<span id="logstate_text" style="color: indianred;">登录/注册</span>
+				</li>
+			</ul>
+
+		</div>
+
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+
+			mui.plusReady(function() {
+
+				window.addEventListener('login', function(event) {
+					document.getElementById("username").innerHTML = localStorage.getItem("u_name");
+					document.getElementById("logstate_text").innerHTML = "立即退出";
+				});
+
+				var login_state = localStorage.getItem("login_state");
+				if(login_state == 0) {
+					document.getElementById("logstate_text").innerHTML = "登录/注册";
+				} else if(login_state == 1) {
+					document.getElementById("username").innerHTML = localStorage.getItem("u_name");
+					document.getElementById("logstate_text").innerHTML = "立即退出";
+				}
+
+				document.getElementById("logoutBtn").addEventListener('tap', function() {
+					if(document.getElementById("logstate_text").innerText == "登录/注册") {
+						mui.openWindow({
+							url: 'login.html',
+							createNew: true
+						});
+
+					} else {
+						var btnArray = ['否', '是'];
+						mui.confirm('确认退出？', '骑境商城', btnArray, function(e) {
+							if(e.index == 1) {
+								mui.toast("退出成功！");
+								document.getElementById("logstate_text").innerText = "登录/注册";
+								document.getElementById("username").innerText = "用户名";
+								localStorage.setItem("login_state", 0);
+
+							} else {
+								mui.toast("取消退出！");
+							}
+						});
+
+					}
+
+				});
+
+				//	收获地址
+				document.getElementById("address").addEventListener('tap', function() {
+
+					if(localStorage.getItem("login_state") == 0) {
+						mui.toast("您还未登录，请先登录！");
+						mui.openWindow({
+							url: 'login.html',
+							createNew: true
+						});
+					} else {
+						mui.openWindow({
+							url: 'address.html',
+							createNew: true
+						});
+					}
+
+				});
+				
+				//	我的订单
+				document.getElementById("my_orders").addEventListener('tap', function() {
+
+					if(localStorage.getItem("login_state") == 0) {
+						mui.toast("您还未登录，请先登录！");
+						mui.openWindow({
+							url: 'login.html',
+							createNew: true
+						});
+					} else {
+						mui.openWindow({
+							url: 'my_orders_main.html',
+							createNew: true
+						});
+					}
+
+				});
+
+			});
+		</script>
+	</body>
+
+</html>

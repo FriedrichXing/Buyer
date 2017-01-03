@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+
+		<style type="text/css">
+			.mui-btn {
+				display: block;
+				width: 93%;
+				margin: 10px auto 0px auto;
+				background-color: #41CEA9;
+				height: 45px;
+			}
+			
+			.mui-card-header {
+				background-color: #41CEA9;
+				color: #FFFFFF;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background-color: #41CEA9;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #FFFFFF;"></a>
+			<h1 class="mui-title" style="color: #FFFFFF;">在线支付</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-card">
+				<div id="submit_state" class="mui-card-header">提交状态</div>
+				<div class="mui-card-content">
+					<div id="choose_paymode" class="mui-card-content-inner">
+						订单提交成功！请选择支付方式
+					</div>
+				</div>
+				<!--<div class="mui-card-footer">页脚</div>-->
+			</div>
+
+			<p style="width: 93%;height: 1px;background-color: #41CEA9;margin: 0px auto;"></p>
+
+			<button id="alipay" type="button" class="mui-btn mui-btn-green">支付宝</button>
+			<button id="wechat" type="button" class="mui-btn mui-btn-green">微信</button>
+			<button id="abc" type="button" class="mui-btn mui-btn-green">农行在线</button>
+		</div>
+
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+
+			//				document.getElementById("alipay").addEventListener('tap', function() {
+			//					var btnArray = ['否', '是'];
+			//					mui.confirm('确认现在付款？', '支付宝', btnArray, function(e) {
+			//						if(e.index == 1) {
+			//							mui.toast("是的");
+			//
+			//						} else {
+			//							mui.toast("取消。。");
+			//						}
+			//					});
+			//				});
+
+			var wxChannel = null; // 微信支付 
+			var aliChannel = null; // 支付宝支付 
+			var channel = null;
+			
+			 mui.plusReady(function() {   
+            // 获取支付通道 
+                plus.payment.getChannels(function(channels){ 
+                    aliChannel=channels[0]; 
+                wxChannel=channels[1]; 
+                },function(e){ 
+                 alert("获取支付通道失败："+e.message); 
+                }); 
+        }) 
+ 
+        document.getElementById('wechat').addEventListener('tap',function() { 
+            console.log("微信"); 
+            pay('wxpay'); 
+        }) 
+        document.getElementById('alipay').addEventListener('tap',function() { 
+            console.log("zhifubao"); 
+            pay('alipay');  
+        }) 
+ 
+        var ALIPAYSERVER='http://demo.dcloud.net.cn/helloh5/payment/alipay.php?total='; 
+        var WXPAYSERVER='http://demo.dcloud.net.cn/helloh5/payment/wxpay.php?total='; 
+        // 2. 发起支付请求 
+        function pay(id){ 
+                // 从服务器请求支付订单 
+                var PAYSERVER=''; 
+                if(id=='alipay'){ 
+                PAYSERVER=ALIPAYSERVER; 
+                channel = aliChannel; 
+            }else if(id=='wxpay'){ 
+                    PAYSERVER=WXPAYSERVER; 
+                    channel = wxChannel; 
+                }else{ 
+                    plus.nativeUI.alert("不支持此支付通道！",null,"捐赠"); 
+                    return; 
+             } 
+                var xhr=new XMLHttpRequest(); 
+                xhr.onreadystatechange=function(){ 
+                    switch(xhr.readyState){ 
+                        case 4: 
+                        if(xhr.status==200){ 
+                            plus.payment.request(channel,xhr.responseText,function(result){ 
+                                plus.nativeUI.alert("支付成功！",function(){ 
+                                back(); 
+                            }); 
+                            },function(error){ 
+                                plus.nativeUI.alert("支付失败：" + error.code); 
+                            }); 
+                        }else{ 
+                            alert("获取订单信息失败！"); 
+                        } 
+                        break; 
+                    default: 
+                    break; 
+                } 
+         } 
+            xhr.open('GET',PAYSERVER); 
+            xhr.send(); 
+    }
+			
+			
+		</script>
+	</body>
+
+</html>

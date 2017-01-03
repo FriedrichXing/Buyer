@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+
+		<style type="text/css">
+			.part {
+				padding: 15px 15px 10px 15px;
+				background-color: #FFFFFF;
+				font-size: 15px;
+			}
+			
+			.mui-table-view {
+				margin: 10px -15px 0px -15px;
+			}
+			
+			.mui-table-view .mui-media-object {
+				max-width: 105px;
+				height: 105px;
+			}
+			
+			#price_style {
+				color: #41CEA9;
+			}
+			
+			#cost {
+				float: right;
+			}
+			
+			#cost_style {
+				margin-top: 10px;
+			}
+			
+			#amount_style {
+				float: right;
+				color: #41CEA9;
+				font-size: 18px;
+			}
+			
+			.mui-btn {
+				float: right;
+				margin-right: 15px;
+				background-color: #41CEA9;
+				border-color: #41CEA9;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background-color: #41CEA9;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #FFFFFF;"></a>
+			<h1 class="mui-title" style="color: #FFFFFF;">订单详情</h1>
+		</header>
+
+		<div class="mui-content">
+			<div class="part">
+				<span>订单号：</span><span id="ordernum">2222222222</span><br />
+				<span>创建时间：</span><span id="posttime">2016-12-14 08:08:08</span>
+			</div>
+			<p style="height: 2px;background-color: #41CEA9;"></p>
+			<div class="part">
+				<span class="mui-icon mui-icon-person-filled"></span><span id="truename">收货人</span>
+				<span id="telephone" style="float: right;">15300000000</span><span class="mui-icon mui-icon-phone-filled" style="float: right;"></span><br />
+				<span class="mui-icon mui-icon-location-filled"></span><span id="addrs">法兰克福州</span><br />
+
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell mui-media">
+						<a>
+							<img id="picurl" class="mui-media-object mui-pull-left" src="../images/aaa.jpg">
+							<div class="mui-media-body">
+								<span id="title">商品名称</span>
+								<p class="mui-ellipsis">规格：<span id="specification">裸车（不含电池及充电器）</span></p>
+								<p class="mui-ellipsis">颜色：<span id="color">红色</span></p>
+								<p class="mui-ellipsis">数量：<span id="num">1</span></p>
+								<span id="price_style">￥<span id="price">0000</span></span>
+							</div>
+						</a>
+					</li>
+				</ul>
+				<p id="cost_style" class="mui-ellipsis">运费：<span id="cost">00</span></p>
+				<span class="mui-ellipsis">实付款（含运费）：</span>
+				<span id="amount_style">￥<span id="amount">00</span></span>
+			</div>
+			<p style="height: 2px;background-color: #41CEA9;"></p>
+
+			<button id="order_state" type="button" class="mui-btn mui-btn-green">订单状态</button>
+		</div>
+
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function() {
+				var self = plus.webview.currentWebview();
+				var orderid = self.orderid;
+
+				mui.ajax('http://api.msyc.com.cn/api/order/' + orderid + '', {
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(mdata) {
+						//						mui.toast(mdata);
+						document.getElementById("ordernum").innerHTML = mdata.data[0].ordernum;
+						document.getElementById("posttime").innerHTML = mdata.data[0].posttime;
+						document.getElementById("truename").innerHTML = mdata.data[0].addr.truename;
+						document.getElementById("telephone").innerHTML = mdata.data[0].addr.telephone;
+						document.getElementById("addrs").innerHTML = mdata.data[0].addr.addrs;
+						document.getElementById("picurl").src = mdata.data[0].attribute.picurl;
+						document.getElementById("title").innerHTML = mdata.data[0].attribute.title;
+						document.getElementById("specification").innerHTML = mdata.data[0].attribute.specification;
+						document.getElementById("color").innerHTML = mdata.data[0].attribute.color;
+						document.getElementById("num").innerHTML = mdata.data[0].attribute.num;
+						document.getElementById("price").innerHTML = mdata.data[0].attribute.price;
+						document.getElementById("cost").innerHTML = mdata.data[0].cost;
+						document.getElementById("amount").innerHTML = mdata.data[0].amount;
+						document.getElementById("order_state").innerText = mdata.data[0].status;
+
+					},
+					error: function(xhr, type, errorThrown) { //异常处理；
+						console.log(type);
+					}
+				});
+
+				document.getElementById("order_state").addEventListener('tap', function() {
+					if(document.getElementById("order_state").innerText == "等待付款") {
+						var btnArray = ['否', '是'];
+						mui.confirm('您还未付款，是否现在付款？', '骑境商城', btnArray, function(e) {
+							if(e.index == 1) {
+								mui.openWindow({
+									url: 'online_pay.html',
+									createNew: true
+								});
+
+							} else {
+								mui.toast("取消。。");
+							}
+						});
+					} else {
+						mui.toast("哈哈哈");
+					}
+				});
+
+			});
+		</script>
+	</body>
+
+</html>
