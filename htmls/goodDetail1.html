@@ -1,0 +1,345 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+
+		<style type="text/css">
+			.mui-slider .mui-slider-group .mui-slider-item img {
+				width: 100%;
+				height: ?;
+			}
+			
+			#title {
+				margin-left: 10px;
+				margin-right: 15px;
+				font-size: 17px;
+				color: #000000;
+			}
+			
+			#price_title {
+				margin-left: 15px;
+				margin-top: 3px;
+				margin-bottom: 0px;
+			}
+			
+			.lv_price_left {
+				float: left;
+				margin-left: 15px;
+				color: #F92672;
+			}
+			
+			.lv_price {
+				float: right;
+				margin-right: 15px;
+				color: #F92672;
+			}
+			
+			#num_title {
+				margin-left: 15px;
+				line-height: 45px;
+			}
+			
+			#color_title {
+				margin-left: 15px;
+				line-height: 35px;
+				float: left;
+			}
+			
+			#color_selecter {
+				height: 33px;
+				margin-top: 0px;
+				width: 118px;
+			}
+			
+			#specification_selecter {
+				height: 33px;
+				margin-top: 0px;
+				width: 118px;
+			}
+			
+			input[type=color],
+			input[type=date],
+			input[type=datetime-local],
+			input[type=datetime],
+			input[type=email],
+			input[type=month],
+			input[type=number],
+			input[type=password],
+			input[type=search],
+			input[type=tel],
+			input[type=text],
+			input[type=time],
+			input[type=url],
+			input[type=week],
+			select,
+			textarea {
+				padding: 5px 15px;
+			}
+			
+			#canshu {
+				display: block;
+				margin: 10px 15px 60px 15px;
+			}
+			
+			#btn_holder {
+				height: 45px;
+				width: 100%;
+				/*margin-bottom: 0px;*/
+				position: fixed;
+				bottom: 0;
+				padding: 3px 5px 3px 5px;
+				background-color: rgba(0, 0, 0, 0.15);
+			}
+			
+			#buy_now {
+				height: 40px;
+				background-color: #41CEA9;
+			}
+			
+			.mui-btn-block {
+				padding: 0px;
+			}
+			
+			.mui-table-view-radio {
+				/*border-radius: 5px;*/
+				margin-left: 15px;
+				margin-right: 15px;
+				border-left: solid 1px #DBDAE0;
+				border-right: solid 1px #DBDAE0;
+			}
+			
+			.mui-content img {
+				width: 100%;
+			}
+			
+			.mui-table-view-radio .mui-table-view-cell .mui-navigate-right:after{
+				color: #41CEA9;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background-color: #41CEA9;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #FFFFFF;"></a>
+			<h1 class="mui-title" style="color: #FFFFFF;">商品详情</h1>
+		</header>
+		<div class="mui-content">
+			<div id="slider" class="mui-slider">
+				<div class="mui-slider-group mui-slider-loop">
+					<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<a href="#">
+							<img id="lastimg" src="../images/aaa.jpg">
+						</a>
+					</div>
+
+					<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<a href="#">
+							<img id="firstimg" src="../images/aaa.jpg">
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<p style="width: 100%;height: 1px;background-color: #808080;"></p>
+			<p id="title" class="mui-ellipsis">默认商品名</p>
+			<p id="price_title">价格</p>
+			<span class="lv_price_left">LV1:￥<span id="lv1_price">0000</span></span>
+			<span class="lv_price">LV2:￥<span id="lv2_price">0000</span></span><br />
+			<span class="lv_price_left">LV3:￥<span id="lv3_price">0000</span></span>
+			<span class="lv_price">LV4:￥<span id="lv4_price">0000</span></span><br />
+			<span class="lv_price_left">LV5:￥<span id="lv5_price">0000</span></span>
+			<span class="lv_price">价格:￥<span id="price">0000</span></span>
+			<p style="width: 95%;height: 1px;background-color: #808080;margin:0px auto;margin-top: 30px;"></p>
+
+			<span id="num_title">数量：</span>
+			<div class="mui-numbox" data-numbox-min='1'>
+				<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+				<input id="num" class="mui-numbox-input" type="number" />
+				<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+			</div><br />
+			<span id="color_title">颜色：</span>
+			<br />
+			<br />
+			<ul id="colors" class="mui-table-view mui-table-view-radio">
+				<!--<li class="mui-table-view-cell">
+						<a class="mui-navigate-right">红色</a>
+					</li>-->
+			</ul>
+			<span id="color_title">规格：</span>
+			<br />
+			<br />
+			<ul id="specifications" class="mui-table-view mui-table-view-radio">
+			</ul>
+
+			<p style="height: 1px;background-color: #808080;margin:0px auto;margin-top: 40px;"></p>
+
+			<p style="color: #41CEA9;font-weight: bold;text-align: center;margin-top: 10px;">商品详情</p>
+			<p style="width: 100%;background-color: #41CEA9;height: 2px;"></p>
+
+			<div class="">
+				<span id="canshu">wwwwwww</span>
+			</div>
+
+			<div id="btn_holder">
+				<button id="buy_now" type="button" class="mui-btn mui-btn-green mui-btn-block">立即购买</button>
+			</div>
+
+		</div>
+
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+
+			var color_send = "";
+			var specification_send = "";
+
+			mui.plusReady(function() {
+				var list = document.querySelector('#colors');
+				list.addEventListener('selected', function(e) {
+					console.log("当前选中的为：" + e.detail.el.innerText);
+					color_send = e.detail.el.innerText;
+				});
+
+				var list2 = document.querySelector('#specifications');
+				list2.addEventListener('selected', function(e) {
+					console.log("当前选中的为：" + e.detail.el.innerText);
+					specification_send = e.detail.el.innerText;
+				});
+
+				//	传来的goodid
+				var self = plus.webview.currentWebview();
+				var goodid = self.goodid;
+				var color_id;
+				var specification_id;
+				var weight;
+
+				mui.ajax('http://api.msyc.com.cn/api/goods/' + goodid + '', {
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(mdata) {
+
+						document.getElementById("firstimg").src = mdata.data[0].picarr[0];
+						document.getElementById("lastimg").src = mdata.data[0].picarr[mdata.data[0].picarr.length - 1];
+
+						var table = document.body.querySelector('.mui-slider-group');
+
+						for(var i = 0; i < mdata.data[0].picarr.length - 1; i++) {
+							var div = document.createElement('div');
+							div.className = 'mui-slider-item';
+							div.innerHTML = '<a>' +
+								'<img src="' + mdata.data[0].picarr[i] + '">' + '</a>';
+
+							table.appendChild(div);
+
+						}
+
+						document.getElementById("title").innerHTML = mdata.data[0].title;
+						document.getElementById("lv1_price").innerHTML = mdata.data[0].lv1;
+						document.getElementById("lv2_price").innerHTML = mdata.data[0].lv2;
+						document.getElementById("lv3_price").innerHTML = mdata.data[0].lv3;
+						document.getElementById("lv4_price").innerHTML = mdata.data[0].lv4;
+						document.getElementById("lv5_price").innerHTML = mdata.data[0].lv5;
+						//						document.getElementById("weight").innerHTML = mdata.data[0].weight;
+						document.getElementById("price").innerHTML = mdata.data[0].price;
+						weight = mdata.data[0].weight;
+
+						color_id = mdata.data[0].attrstr.color.id;
+						var color = mdata.data[0].attrstr.color.name;
+						var color_array = color.split("|");
+						//							console.log(color_array);
+						//						mui.toast(color_array.length);
+
+						var table = document.body.querySelector('#colors');
+						for(var i = 0; i < color_array.length; i++) {
+							var li = document.createElement('li');
+							li.className = 'mui-table-view-cell';
+
+							li.innerHTML = '<a class="mui-navigate-right">' + color_array[i]
+							'</a>';
+
+							table.appendChild(li);
+						}
+
+						specification_id = mdata.data[0].attrstr.specification.id;
+						var specification = mdata.data[0].attrstr.specification.name;
+						var specification_array = specification.split("|");
+						var table = document.body.querySelector('#specifications');
+						for(var i = 0; i < specification_array.length; i++) {
+							var li = document.createElement('li');
+							li.className = 'mui-table-view-cell';
+
+							li.innerHTML = '<a class="mui-navigate-right">' + specification_array[i]
+							'</a>';
+
+							table.appendChild(li);
+						}
+
+						//	接口获取的商品详情内容
+						document.getElementById("canshu").innerHTML = mdata.data[0].content;
+						//	手动添加的商品详情用来测试
+						//						document.getElementById("canshu").innerHTML = "<p>\r\n\t产品参数：\r\n</p>\r\n<p>\r\n\t<br />\r\n</p>\r\n<p>\r\n\t产品规格长*宽*高（mm）: 1780*710*1120&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 电池类型: 铅酸电池&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 轮胎规格（前、后轮）: 3.00-10\r\n</p>\r\n<p>\r\n\t轴距（mm): 1320&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 整车装备质量（kg）: 40&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;最高车速（km/h）: 35\r\n</p>\r\n<p>\r\n\t制动方式（前、后）: 前后碟刹&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 转向形式: 方向把&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;额定载客（含驾驶员）（人）: 2\r\n</p>\r\n<p>\r\n\t可配电池电压（V）: 48/60&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可配电池容量（AH）: 20&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电机类型: 轮毂电机\r\n</p>\r\n<p>\r\n\t电机功率（W）: 1000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 电机品牌: 豫玛&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;减震系统: 改装仿智杰方头减震\r\n</p>\r\n<p>\r\n\t灯光系统: 高亮度照明灯光系统&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 轮胎/轮毂: 前后 3.00-10 加厚真空胎&nbsp;&nbsp;&nbsp;&nbsp; 坐垫: 舒适PU坐垫\r\n</p>\r\n<p>\r\n\t遥控报警器: 双遥控报警器&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 控制器: 15管正弦波控制器\r\n</p>\r\n<br />\r\n<p>\r\n\t<img src=\"http://www.qj361.com/Public/Uploads/qj361/other/20161011/14761728802585.jpg\" alt=\"\" /> \r\n</p>\r\n<p>\r\n\t<span style=\"color:#333333;font-family:微软雅黑, 'microsoft yahei';font-size:18px;line-height:25px;background-color:#ffffff;\"><span style=\"font-size:18px;font-family:微软雅黑, 'microsoft yahei';color:#333333;line-height:25px;background-color:#ffffff;\">但出行，不论何时何地安全是第一位，三无产品，我们不推荐您购买与使用！</span></span> \r\n</p>\r\n<p>\r\n\t<img src=\"http://www.qj361.com/Public/Uploads/qj361/other/20161011/14761728829736.jpg\" alt=\"\" /> \r\n</p>\r\n<p>\r\n\t<span style=\"border-left-width:0px;list-style-type:none;font-size:18px;font-family:微软雅黑, sans-serif;border-right-width:0px;vertical-align:baseline;border-bottom-width:0px;color:#333333;outline-width:0px;margin:0px;line-height:27px;border-top-width:0px;background-color:#ffffff;padding:0px;\">现为您隆重推荐</span><a style=\"border-left-width:0px;list-style-type:none;cursor:pointer;font-size:18px;font-family:微软雅黑, sans-serif;border-right-width:0px;vertical-align:baseline;border-bottom-width:0px;float:none;color:#333333;outline-style:none;text-decoration:none;margin:0px;display:inline-block;line-height:27px;border-top-width:0px;background-color:#ffffff;hide-focus:true;padding:0px;\" href=\"http://www.qj361.com/\" target=\"_self\" _href=\"http://www.qj361.com/\">网上摩托车商城</a><span style=\"border-left-width:0px;list-style-type:none;font-size:18px;font-family:微软雅黑, sans-serif;border-right-width:0px;vertical-align:baseline;border-bottom-width:0px;color:#333333;outline-width:0px;margin:0px;line-height:27px;border-top-width:0px;background-color:#ffffff;padding:0px;\">的电动踏板车——晶龟王！两轮电摩，舒适骑行。</span> \r\n</p>\r\n<p>\r\n\t<img src=\"http://www.qj361.com/Public/Uploads/qj361/other/20161011/14761728823026.jpg\" alt=\"\" /> \r\n</p>";
+
+					},
+					error: function(xhr, type, errorThrown) { //异常处理；
+						console.log(type);
+					}
+				});
+
+				document.getElementById("buy_now").addEventListener('tap', function() {
+					if(localStorage.getItem("login_state") == 0) {
+						mui.toast("您还未登录，请先登录！");
+						mui.openWindow({
+							url: 'login.html',
+							createNew: true
+						});
+					} else {
+						var price = document.getElementById("price").innerHTML;
+
+						var num = document.getElementById("num").value;
+
+						var amount = price * num;
+
+						//						mui.toast(specification_id);
+
+						if(color_send == "") {
+							mui.toast("请点击选择商品颜色");
+						} else if(specification_send == "") {
+							mui.toast("请点击选择商品规格");
+						} else {
+							mui.openWindow({
+								url: 'order_submit.html',
+								extras: {
+									goodid: goodid,
+									num: num,
+									color: color_send,
+									specification: specification_send,
+									amount: amount,
+									color_id: color_id,
+									specification_id: specification_id,
+									weight: weight
+								},
+								createNew: true,
+							});
+						}
+
+					}
+				});
+
+			});
+
+			//获得slider插件对象
+			var gallery = mui('.mui-slider');
+			gallery.slider({
+				interval: 3000 //自动轮播周期，若为0则不自动播放，默认为0；
+			});
+		</script>
+	</body>
+
+</html>

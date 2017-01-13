@@ -205,7 +205,8 @@
       "css/mui.min.css"
     ],
     "refer": [
-      "htmls/edit_address.html"
+      "htmls/edit_address.html",
+      "htmls/add_address.html"
     ]
   },
   "htmls/edit_address.html": {
@@ -250,6 +251,9 @@
       "images/aaa.jpg",
       "js/mui.min.js",
       "css/mui.min.css"
+    ],
+    "refer": [
+      "htmls/order_detail.html"
     ]
   },
   "htmls/my_orders_main.html": {
@@ -261,6 +265,24 @@
     ],
     "refer": [
       "htmls/my_orders_sub.html"
+    ]
+  },
+  "htmls/add_address.html": {
+    "resources": [
+      "js/mui.picker.js",
+      "js/mui.poppicker.js",
+      "js/city.data.js",
+      "css/mui.poppicker.css",
+      "css/mui.picker.css",
+      "js/city.data-3.js"
+    ],
+    "refer": [
+      "htmls/address.html"
+    ]
+  },
+  "htmls/order_detail.html": {
+    "resources": [
+      "images/aaa.jpg"
     ]
   }
 }

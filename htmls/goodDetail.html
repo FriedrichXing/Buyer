@@ -38,29 +38,6 @@
 				color: #F92672;
 			}
 			
-			#num_title {
-				margin-left: 15px;
-				line-height: 45px;
-			}
-			
-			#color_title {
-				margin-left: 15px;
-				line-height: 35px;
-				float: left;
-			}
-			
-			#color_selecter {
-				height: 33px;
-				margin-top: 0px;
-				width: 118px;
-			}
-			
-			#specification_selecter {
-				height: 33px;
-				margin-top: 0px;
-				width: 118px;
-			}
-			
 			input[type=color],
 			input[type=date],
 			input[type=datetime-local],
@@ -78,15 +55,6 @@
 			select,
 			textarea {
 				padding: 5px 15px;
-			}
-			
-			#select_border {
-				border: solid 1px #BBBBBB;
-				height: 35px;
-				display: block;
-				float: left;
-				border-radius: 3px;
-				margin-left: 5px;
 			}
 			
 			#canshu {
@@ -111,6 +79,89 @@
 			
 			.mui-btn-block {
 				padding: 0px;
+			}
+			
+			.mui-content img {
+				width: 100%;
+			}
+			
+			#queren {
+				padding: 8px;
+				border-radius: 0px;
+				background-color: #41CEA9;
+				border: solid 1px #41CEA9;
+			}
+			
+			.color_ul {
+				margin-top: 5px;
+			}
+			
+			.color_spec {
+				list-style: none;
+				float: left;
+				font-size: 15px;
+				border: solid 1px #ccc;
+				margin-left: 10px;
+				padding: 3px 5px;
+				border-radius: 5px;
+				background-color: #FFFFFF;
+			}
+			
+			.color_spec_selected {
+				list-style: none;
+				float: left;
+				border: solid 1px #41CEA9;
+				margin-left: 10px;
+				padding: 3px 5px;
+				border-radius: 5px;
+				background-color: #41CEA9;
+			}
+			
+			.color_spec a {
+				color: #000000;
+			}
+			
+			.color_spec_selected a {
+				color: #FFFFFF;
+			}
+			
+			.spec_ul {
+				margin-top: 5px;
+			}
+			
+			.spec_spec {
+				list-style: none;
+				float: left;
+				font-size: 15px;
+				border: solid 1px #ccc;
+				margin-left: 10px;
+				padding: 3px 5px;
+				border-radius: 5px;
+				margin-top: 5px;
+				margin-bottom: 3px;
+				background-color: #FFFFFF;
+			}
+			
+			.spec_spec_selected {
+				list-style: none;
+				float: left;
+				border: solid 1px #41CEA9;
+				margin-left: 10px;
+				padding: 3px 5px;
+				border-radius: 5px;
+				background-color: #41CEA9;
+			}
+			
+			.spec_spec a {
+				color: #000000;
+			}
+			
+			.spec_spec_selected a {
+				color: #FFFFFF;
+			}
+			
+			.mui-numbox {
+				margin: 5px 0px 10px 15px;
 			}
 		</style>
 	</head>
@@ -139,53 +190,121 @@
 				</div>
 			</div>
 
-			<p style="width: 100%;height: 1px;background-color: #808080;"></p>
-			<p id="title" class="mui-ellipsis">默认商品名</p>
-			<p id="price_title">价格</p>
-			<span class="lv_price_left">LV1:￥<span id="lv1_price">0000</span></span>
-			<span class="lv_price">LV2:￥<span id="lv2_price">0000</span></span><br />
-			<span class="lv_price_left">LV3:￥<span id="lv3_price">0000</span></span>
-			<span class="lv_price">LV4:￥<span id="lv4_price">0000</span></span><br />
-			<span class="lv_price_left">LV5:￥<span id="lv5_price">0000</span></span>
-			<span class="lv_price">价格:￥<span id="price">0000</span></span>
-			<p style="width: 95%;height: 1px;background-color: #808080;margin:0px auto;margin-top: 30px;"></p>
-
-			<span id="num_title">数量：</span>
-			<div class="mui-numbox" data-numbox-min='1'>
-				<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
-				<input id="num" class="mui-numbox-input" type="number" />
-				<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
-			</div><br />
-			<span id="color_title">颜色：</span>
-			<div id="select_border">
-				<select id="color_selecter">
-
-				</select>
+			<div style="background-color: #FFFFFF;">
+				<p style="width: 100%;height: 1px;background-color: #808080;visibility: hidden;"></p>
+				<p id="title" class="mui-ellipsis">默认商品名</p>
+				<p id="price_title">价格</p>
+				<span class="lv_price_left">LV1:￥<span id="lv1_price">0000</span></span>
+				<span class="lv_price">LV2:￥<span id="lv2_price">0000</span></span><br />
+				<span class="lv_price_left">LV3:￥<span id="lv3_price">0000</span></span>
+				<span class="lv_price">LV4:￥<span id="lv4_price">0000</span></span><br />
+				<span class="lv_price_left">LV5:￥<span id="lv5_price">0000</span></span>
+				<span class="lv_price">价格:￥<span id="price">0000</span></span>
+				<p style="width: 100%;height: 1px;background-color: #DBDAE0;margin:0px auto;margin-top: 30px;"></p>
 			</div>
-			<br /><br />
-			<span id="color_title">规格：</span>
-			<div id="select_border">
-				<select id="specification_selecter">
 
-				</select>
+			<div style="margin-top: 15px;margin-bottom: 15px;width: 100%;height: 40px;background-color: #FFFFFF;">
+
+				<ul class="mui-table-view">
+					<a href="#picture">
+						<li class="mui-table-view-cell" style="color: #000000;">
+							<span class="mui-icon mui-icon-arrowright mui-pull-right"></span>
+							<p style="color: #000000;font-size: 15px;" id="specs_chosen" class="mui-ellipsis">请选择商品颜色及规格</p>
+
+						</li>
+					</a>
+				</ul>
+
 			</div>
-			<p style="height: 1px;background-color: #808080;margin:0px auto;margin-top: 40px;"></p>
 
-				<p style="color: #41CEA9;font-weight: bold;text-align: center;margin-top: 10px;">商品详情</p>
-				<p style="width: 100%;background-color: #41CEA9;height: 2px;"></p>
-			<span id="canshu">wwwwwww</span>
-
+			<p style="color: #41CEA9;font-weight: bold;text-align: center;margin-top: 20px;">商品详情</p>
+			<p style="width: 100%;background-color: #41CEA9;height: 2px;"></p>
+			<div class="">
+				<span id="canshu">wwwwwww</span>
+			</div>
 			<div id="btn_holder">
 				<button id="buy_now" type="button" class="mui-btn mui-btn-green mui-btn-block">立即购买</button>
 			</div>
 
 		</div>
 
+		<div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
+			<div style="background-color: #FFFFFF;">
+				<img id="good_img" src="../images/aaa.jpg" style="width: 80px;height: 80px;margin: -15px 0px 0px 15px;border-radius: 5px;" />
+				<span style="color: #41CEA9;">￥</span><span id="good_price" style="color: #41CEA9;">0000</span>
+				<br />
+				<span style="margin-left: 15px;font-size: 15px;color: #808080;">数量</span><br />
+				<div class="mui-numbox" data-numbox-min='1'>
+					<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+					<input id="num" class="mui-numbox-input" type="number" />
+					<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+				</div><br />
+				<span style="margin-left: 15px;font-size: 15px;color: #808080;">颜色</span>
+				<br />
+
+				<ul class="color_ul" style="margin-left: -35px;">
+					<!--<li class="color_spec">
+					<a>红色</a>
+				</li>
+				<li class="color_spec">
+					<a>黄色</a>
+				</li>
+				<li class="color_spec">
+					<a>黑色</a>
+				</li>
+				<li class="color_spec">
+					<a>白色</a>
+				</li>-->
+				</ul>
+				<br />
+				<span style="margin-left: 15px;font-size: 15px;color: #808080;">规格</span>
+				<ul class="spec_ul" style="margin-left: -35px;">
+					<!--<li class="spec_spec">
+					<a>裸车不带电池</a>
+				</li>
+				<li class="spec_spec">
+					<a>配备60V电池厉害吧</a>
+				</li>-->
+				</ul>
+
+				<button id="queren" type="button" class="mui-btn mui-btn-blue mui-btn-block">确认</button>
+			</div>
+		</div>
+
 		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init();
 
+			var color_send = "";
+			var specification_send = "";
+
 			mui.plusReady(function() {
+				mui('.color_ul').on('tap', '.color_spec', function() {
+					//					mui.toast(this.innerText);
+					color_send = this.innerText;
+
+					var lastActiveElem = mui('.color_ul li');
+					for(var i = 0; i < lastActiveElem.length; i++) {
+						lastActiveElem[i].classList.remove('color_spec_selected');
+					}
+					var currentElem = this;
+					currentElem.classList.add('color_spec_selected');
+
+				});
+
+				mui('.spec_ul').on('tap', '.spec_spec', function() {
+					//					mui.toast(this.innerText);
+					specification_send = this.innerText;
+
+					var lastActiveElem = mui('.spec_ul li');
+					for(var i = 0; i < lastActiveElem.length; i++) {
+						lastActiveElem[i].classList.remove('spec_spec_selected');
+					}
+					var currentElem = this;
+					currentElem.classList.add('spec_spec_selected');
+
+				});
+
 				//	传来的goodid
 				var self = plus.webview.currentWebview();
 				var goodid = self.goodid;
@@ -220,34 +339,42 @@
 						document.getElementById("lv3_price").innerHTML = mdata.data[0].lv3;
 						document.getElementById("lv4_price").innerHTML = mdata.data[0].lv4;
 						document.getElementById("lv5_price").innerHTML = mdata.data[0].lv5;
-//						document.getElementById("weight").innerHTML = mdata.data[0].weight;
+						//						document.getElementById("weight").innerHTML = mdata.data[0].weight;
 						document.getElementById("price").innerHTML = mdata.data[0].price;
 						weight = mdata.data[0].weight;
-						
-						
+
 						color_id = mdata.data[0].attrstr.color.id;
 						var color = mdata.data[0].attrstr.color.name;
-						//							console.log(color);
-						//							<option>item-1</option>
 						var color_array = color.split("|");
 						//							console.log(color_array);
-						var colors = document.body.querySelector('#color_selecter');
+						//						mui.toast(color_array.length);
+
+						var table = document.body.querySelector('.color_ul');
 						for(var i = 0; i < color_array.length; i++) {
-							var option_item = document.createElement('option');
-							option_item.innerText = color_array[i];
-							colors.appendChild(option_item);
+							var li = document.createElement('li');
+							li.className = 'color_spec';
+							li.innerHTML = '<a>' + color_array[i]
+							'</a>';
+							table.appendChild(li);
 						}
-						
+
 						specification_id = mdata.data[0].attrstr.specification.id;
 						var specification = mdata.data[0].attrstr.specification.name;
 						var specification_array = specification.split("|");
-						var specifications = document.body.querySelector('#specification_selecter');
+
+						var table = document.body.querySelector('.spec_ul');
 						for(var i = 0; i < specification_array.length; i++) {
-							var option_item2 = document.createElement('option');
-							option_item2.innerText = specification_array[i];
-							specifications.appendChild(option_item2);
+							var li = document.createElement('li');
+							li.className = 'spec_spec';
+							li.innerHTML = '<a>' + specification_array[i]
+							'</a>';
+							table.appendChild(li);
 						}
 
+						document.getElementById("good_img").src = mdata.data[0].picurl;
+						document.getElementById("good_price").innerHTML = mdata.data[0].price;
+
+						//	接口获取的商品详情内容
 						document.getElementById("canshu").innerHTML = mdata.data[0].content;
 
 					},
@@ -265,33 +392,46 @@
 						});
 					} else {
 						var price = document.getElementById("price").innerHTML;
-						
+
 						var num = document.getElementById("num").value;
-						var color = document.getElementById("color_selecter").value;
-						var specification = document.getElementById("specification_selecter").value;
-						var amount = price*num;
-						
-//						mui.toast(specification_id);
-						
-						mui.openWindow({
-							url: 'order_submit.html',
-							extras: {
-								goodid: goodid,
-								num:num,
-								color:color,
-								specification:specification,
-								amount:amount,
-								color_id:color_id,
-								specification_id:specification_id,
-								weight:weight
-							},
-							createNew: true,
-						});
+
+						var amount = price * num;
+
+						//						mui.toast(specification_id);
+
+						if(color_send == "" || specification_send == "") {
+								mui('#picture').popover('show');
+						} else {
+							mui.openWindow({
+								url: 'order_submit.html',
+								extras: {
+									goodid: goodid,
+									num: num,
+									color: color_send,
+									specification: specification_send,
+									amount: amount,
+									color_id: color_id,
+									specification_id: specification_id,
+									weight: weight
+								},
+								createNew: true,
+							});
+						}
+
 					}
 				});
 
 			});
-			
+
+			mui('body').on('shown', '.mui-popover', function(e) {
+				console.log('shown', e.detail.id); //detail为当前popover元素
+			});
+			mui('body').on('tap', '#queren', function(e) {
+				console.log('hidden', e.detail.id); //detail为当前popover元素
+				mui('#picture').popover('hide');
+				document.getElementById("specs_chosen").innerText = "已经选择\"" + color_send + "\",\"" + specification_send + "\"";
+			});
+
 			//获得slider插件对象
 			var gallery = mui('.mui-slider');
 			gallery.slider({
