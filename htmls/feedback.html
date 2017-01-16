@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+
+		<style type="text/css">
+			.mui-btn,
+			button,
+			input[type=button],
+			input[type=reset],
+			input[type=submit] {
+				padding: 6px 40px;
+				background-color: #41CEA9;
+				border-color: #41CEA9;
+			}
+			
+			input,
+			textarea {
+				font-size: 15px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background-color: #41CEA9;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #FFFFFF;"></a>
+			<h1 class="mui-title" style="color: #FFFFFF;">用户反馈</h1>
+		</header>
+		<div class="mui-content">
+
+			<form class="mui-input-group" style="margin-top: 10px;">
+				<div class="mui-input-row">
+					<input id="contacter_phone" type="text" class="mui-input-clear" placeholder="请输入手机号">
+				</div>
+				<div>
+					<textarea id="feedback_text" style="overflow-y: hidden;" rows="5" placeholder="请输入您的意见或反馈"></textarea>
+				</div>
+			</form>
+
+			<div class="mui-button-row">
+				<button id="confirm" type="button" class="mui-btn mui-btn-primary">确认</button>
+				<button type="button" class="mui-btn mui-btn-primary">取消</button>
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function() {
+				var user_name = localStorage.getItem('u_name');
+				document.getElementById("confirm").addEventListener('tap', function() {
+
+					var contacter_phone = document.getElementById("contacter_phone").value;
+					var feedback_text = document.getElementById("feedback_text").value;
+//					mui.toast(user_name);
+
+					//	判断输入框
+					if(contacter_phone == "" || feedback_text == "") {
+						mui.toast("手机号或反馈不能为空");
+					} else {
+						//	访问接口
+						mui.ajax('http://api.msyc.com.cn/api/user/register', {
+							data: {
+								username: user_name,
+								contacter_phone: contacter_phone,
+								feedback_text: feedback_text
+							},
+							dataType: 'json', //服务器返回json格式数据
+							type: 'post', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							headers: {
+								'Content-Type': 'application/json'
+							},
+							success: function(mdata) {
+
+								if(mdata.status == "success") {
+									mui.toast("提交成功！");
+
+								} else {
+									mui.toast(mdata.error.msg);
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								//异常处理；
+								console.log(type);
+							}
+						});
+					}
+
+				})
+			});
+		</script>
+	</body>
+
+</html>

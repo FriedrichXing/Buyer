@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		
+		<style type="text/css">
+			#erweima {
+				width: 70%;
+				height: ?;
+				display: block;
+				margin: 10% auto 8% auto;
+			}
+			#text_01{
+				text-align: center;
+				font-size: 16px;
+			}
+			.mui-btn{
+				background-color: #41CEA9;
+				border-color: #41CEA9;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background-color: #41CEA9;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #FFFFFF;"></a>
+			<h1 class="mui-title" style="color: #FFFFFF;">支付宝支付</h1>
+		</header>
+		<div class="mui-content">
+			<img id="erweima" src="../images/aaa.jpg" />
+			<p id="text_01">扫描屏幕上方的二维码完成付款</p>
+			<div id="btn_holder">
+				<div class="mui-button-row">
+					<button class="mui-btn mui-btn-primary" type="button">已经完成支付</button>&nbsp;&nbsp;
+					<button class="mui-btn mui-btn-primary" type="button">另一个按钮</button>
+				</div>
+			</div>
+		</div>
+		
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			window.onload = function() {
+				//从服务器获取数据
+				mui.ajax('http://api.msyc.com.cn/api/pay/1', {
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(mdata) {
+						if(mdata.status == "success") {
+							document.getElementById("erweima").src = mdata.data.img;
+							
+							//业务数据获取完毕，并已插入当前页面DOM；
+							//注意：若为ajax请求，则需将如下代码放在处理完ajax响应数据之后；
+							mui.plusReady(function() {
+								//关闭等待框
+								plus.nativeUI.closeWaiting();
+								//显示当前页面
+								mui.currentWebview.show();
+							});
+						} else {
+							mui.toast("访问接口出错");
+						}
+					},
+					error: function(xhr, type, errorThrown) { //异常处理；
+						console.log(type);
+					}
+				});
+				
+
+			}
+		</script>
+	</body>
+
+</html>

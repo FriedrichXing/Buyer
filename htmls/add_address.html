@@ -86,7 +86,7 @@
 			<form class="mui-input-group">
 				<div class="mui-input-row">
 					<label>默认地址</label>
-					<div id="isDefault" class="mui-switch">
+					<div id="isDefault" class="mui-switch mui-active">
 						<div class="mui-switch-handle"></div>
 					</div>
 				</div>
@@ -103,16 +103,27 @@
 			mui.init();
 
 			mui.plusReady(function() {
-				var isdefault = 0;
-					document.getElementById("isDefault").addEventListener("toggle", function(event) {
-						if(event.detail.isActive) {
-							isdefault = 1;
-						} else {
-							isdefault = 0;
-						}
-					});
+				
+				//	判断哪个页面传来的
+				var whichPage;
+				//	上个页面传来的值
+				var self = plus.webview.currentWebview();
+				whichPage = self.whichPage;
+
+				var isdefault = 1;
+				document.getElementById("isDefault").addEventListener("toggle", function(event) {
+					if(event.detail.isActive) {
+						isdefault = 1;
+					} else {
+						isdefault = 0;
+					}
+				});
+				
+				
+				
 
 				document.getElementById("confirm").addEventListener('tap', function() {
+					
 					var username = document.getElementById("username").value;
 					var phone = document.getElementById("phone").value;
 					var prov = document.getElementById("prov").innerHTML;
@@ -121,7 +132,10 @@
 					var addr = document.getElementById("addr").value;
 					var zipcode = document.getElementById("zipcode").value;
 					
-//					mui.toast(isdefault+"aa");
+					if(username == "" || phone == "" || prov == ""|| city == "" || country == "" || addr == "" || zipcode == ""){
+						mui.toast("收获地址不能为空")
+					} else {
+						//					mui.toast(isdefault+"aa");
 					var user_id = localStorage.getItem("u_id");
 					//	添加收获地址请求
 					mui.ajax('http://api.msyc.com.cn/api/addr', {
@@ -146,11 +160,17 @@
 
 							if(mdata.status == "success") {
 								mui.toast("添加收获地址成功！");
-
-								mui.openWindow({
-									url: 'address.html',
-									createNew: true
-								});
+								
+								if(whichPage == 0){
+									var view = plus.webview.getWebviewById('address.html');
+								}else if(whichPage == 1){
+									var view = plus.webview.getWebviewById('choose_addr.html');
+								}else if(whichPage == 2){
+									var view = plus.webview.getWebviewById('order_submit.html');
+								}
+								
+								view.reload();
+								mui.back();
 							} else {
 								mui.toast(mdata.error.msg);
 							}
@@ -160,6 +180,18 @@
 							console.log(type);
 						}
 					});
+					}
+
+					
+					
+//					var view = plus.webview.getWebviewById('choose_addr.html');
+//
+//				mui.fire(view, 'add_address', {
+//					truename: "aaa",
+//				});
+//
+//				mui.back();
+					
 				});
 
 			});

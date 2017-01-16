@@ -65,39 +65,52 @@
 
 			mui.plusReady(function() {
 				document.getElementById("register").addEventListener('tap', function() {
-					
-					//	注册请求
-					mui.ajax('http://api.msyc.com.cn/api/user/register', {
-						data: {
-							username: document.getElementById("username").value,
-							email:document.getElementById("email").value,
-							pwd:document.getElementById("password_confirm").value
-						},
-						dataType: 'json', //服务器返回json格式数据
-						type: 'post', //HTTP请求类型
-						timeout: 10000, //超时时间设置为10秒；
-						headers: {
-							'Content-Type': 'application/json'
-						},
-						success: function(mdata) {
 
-							if(mdata.status == "success") {
-								mui.toast("注册成功！请重新登录");
+					var username = document.getElementById("username").value;
+					var email = document.getElementById("email").value;
+					var pwd = document.getElementById("password_confirm").value;
+					var pwd1 = document.getElementById("password").value;
 
-								//	注册成功跳转到登录页面
-								mui.openWindow({
-									url: 'login.html',
-									id: 'login.html',
-								});
-							} else {
-								mui.toast(mdata.error.msg);
+					//	判断输入框
+					if(username == "" || email == "" || pwd == "" || pwd1 == "") {
+						mui.toast("用户信息不能为空！")
+					} else if(pwd != pwd1) {
+						mui.toast("两次输入密码不一致！")
+					} else {
+						//	注册请求
+						mui.ajax('http://api.msyc.com.cn/api/user/register', {
+							data: {
+								username: username,
+								email: email,
+								pwd: pwd
+							},
+							dataType: 'json', //服务器返回json格式数据
+							type: 'post', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							headers: {
+								'Content-Type': 'application/json'
+							},
+							success: function(mdata) {
+
+								if(mdata.status == "success") {
+									mui.toast("注册成功！请重新登录");
+
+									//	注册成功跳转到登录页面
+									mui.openWindow({
+										url: 'login.html',
+										id: 'login.html',
+									});
+								} else {
+									mui.toast(mdata.error.msg);
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								//异常处理；
+								console.log(type);
 							}
-						},
-						error: function(xhr, type, errorThrown) {
-							//异常处理；
-							console.log(type);
-						}
-					});
+						});
+					}
+
 				});
 			});
 		</script>

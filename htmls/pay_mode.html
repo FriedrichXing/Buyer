@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+
+		<style type="text/css">
+			.mui-btn {
+				display: block;
+				width: 93%;
+				margin: 10px auto 0px auto;
+				background-color: #41CEA9;
+				height: 45px;
+				border: solid 1px #41CEA9;
+			}
+			
+			.mui-card-header {
+				background-color: #41CEA9;
+				color: #FFFFFF;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background-color: #41CEA9;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #FFFFFF;"></a>
+			<h1 class="mui-title" style="color: #FFFFFF;">在线支付</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-card">
+				<div id="submit_state" class="mui-card-header">提交状态</div>
+				<div class="mui-card-content">
+					<div id="choose_paymode" class="mui-card-content-inner">
+						订单提交成功！请选择支付方式
+					</div>
+				</div>
+			</div>
+
+			<p style="width: 93%;height: 1px;background-color: #41CEA9;margin: 0px auto;"></p>
+
+			<button id="alipay" type="button" class="mui-btn mui-btn-green">支付宝</button>
+			<button id="wechat" type="button" class="mui-btn mui-btn-green">微信</button>
+			<button id="abc" type="button" class="mui-btn mui-btn-green">农行在线</button>
+		</div>
+
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			
+			mui.plusReady(function(){
+				//	微信支付
+				document.getElementById("wechat").addEventListener('tap',function(){
+					mui.openWindow({
+						url:'pay_mode_wechat.html',
+						createNew:true,
+						show:{
+							autoShow:false
+						}
+					});
+				})
+				
+				//	支付宝支付
+				document.getElementById("alipay").addEventListener('tap',function(){
+					mui.openWindow({
+						url:'pay_mode_alipay.html',
+						createNew:true,
+						show:{
+							autoShow:false
+						}
+					});
+				})
+			});
+			
+		</script>
+	</body>
+
+</html>

@@ -320,12 +320,16 @@
 					"js/mui.min.js",
 					"css/mui.min.css",
 					"fonts/mui.ttf",
-					"images/bg.jpg"
+					"images/bg.jpg",
+					"images/aaa.jpg",
+					"css/iconfont.css",
+					"images/233.jpg"
 				],
 				"refer": [
 					"htmls/login.html",
 					"htmls/address.html",
-					"htmls/my_orders_main.html"
+					"htmls/my_orders_main.html",
+					"htmls/feedback.html"
 				],
 				"priority": 0
 			},
@@ -333,7 +337,9 @@
 				"resources": [
 					"js/mui.min.js",
 					"fonts/mui.ttf",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"images/aaa.jpg",
+					"images/233.jpg"
 				],
 				"refer": [
 					"htmls/register.html",
@@ -441,7 +447,10 @@
 				],
 				"refer": [
 					"htmls/address.html",
-					"htmls/online_pay.html"
+					"htmls/online_pay.html",
+					"htmls/choose_addr.html",
+					"htmls/pay_mode.html",
+					"htmls/add_address.html"
 				],
 				"priority": 0
 			},
@@ -482,7 +491,10 @@
 					"js/city.data.js",
 					"css/mui.poppicker.css",
 					"css/mui.picker.css",
-					"js/city.data-3.js"
+					"js/city.data-3.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
 				],
 				"refer": [
 					"htmls/address.html"
@@ -491,7 +503,60 @@
 			},
 			"htmls/order_detail.html": {
 				"resources": [
-					"images/aaa.jpg"
+					"images/aaa.jpg",
+					"js/mui.min.js"
+				],
+				"refer": [
+					"htmls/pay_mode.html"
+				],
+				"priority": 0
+			},
+			"htmls/choose_addr.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
+				],
+				"refer": [
+					"htmls/add_address.html"
+				],
+				"priority": 0
+			},
+			"htmls/pay_mode.html": {
+				"resources": [
+					"js/mui.min.js"
+				],
+				"refer": [
+					"htmls/pay_mode_wechat.html",
+					"htmls/pay_mode_alipay.html"
+				],
+				"priority": 0
+			},
+			"htmls/pay_mode_wechat.html": {
+				"resources": [
+					"js/mui.min.js",
+					"images/aaa.jpg",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"htmls/feedback.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"htmls/pay_mode_alipay.html": {
+				"resources": [
+					"images/aaa.jpg",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
 				],
 				"refer": [],
 				"priority": 0

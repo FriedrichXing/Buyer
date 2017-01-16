@@ -6,7 +6,7 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
-		
+
 		<style type="text/css">
 			.mui-input-row label {
 				width: 20%;
@@ -25,7 +25,8 @@
 				border: 1px solid #41CEA9;
 				background-color: #41CEA9;
 			}
-			#register{
+			
+			#register {
 				color: #41CEA9;
 			}
 		</style>
@@ -39,7 +40,8 @@
 		<div class="mui-content">
 
 			<div style="margin-top: 30px; text-align: center;">
-				<span class="mui-icon mui-icon-person" style="font-size: 4em; border: 2px solid gray; border-radius: 50%; color: gray;"></span>
+				<!--<span class="mui-icon mui-icon-person" style="font-size: 4em; border: 2px solid gray; border-radius: 50%; color: gray;"></span>-->
+				<img src="../images/aaa.jpg" style="width: 75px;height: 75px;border: 2px solid #00000000;border-radius: 50%;" />
 			</div>
 			<div class="mui-card" style="margin-top: 20px;">
 				<form class="mui-input-group">
@@ -61,84 +63,83 @@
 				<button id="repsd" type="button" class="mui-btn mui-btn-link own-font-size" style="padding-top: 0px; margin-left: 60px; color: #FF6A6A;">忘记密码</button>
 			</div>
 		</div>
-		
-		
-		
+
 		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init({});
-			mui.plusReady(function(){
-				document.getElementById("repsd").addEventListener('tap',function(){
+			mui.plusReady(function() {
+				document.getElementById("repsd").addEventListener('tap', function() {
 					mui.toast("该功能暂未开放。。")
 				});
-				
-				document.getElementById("register").addEventListener('tap',function(){
+
+				document.getElementById("register").addEventListener('tap', function() {
 					mui.openWindow({
-						url:'register.html',
-						id:'register.html',
-						createNew:true
+						url: 'register.html',
+						id: 'register.html',
+						createNew: true
 					});
 				});
-				
+
 				//	设置初始登录状态为非登录
-				localStorage.setItem("login_state",0);
-				
-				document.getElementById("loginBtn").addEventListener('tap',function(){
-					//	登录请求
-					mui.ajax('http://api.msyc.com.cn/api/user/login', {
-						data: {
-							username: document.getElementById("username").value,
-							password:document.getElementById("password").value
-						},
-						dataType: 'json', //服务器返回json格式数据
-						type: 'post', //HTTP请求类型
-						timeout: 10000, //超时时间设置为10秒；
-						headers: {
-							'Content-Type': 'application/json'
-						},
-						success: function(mdata) {
-							
-							//	开发直接登录
-//								mui.openWindow({
-//									url: 'main.html',
-//									id: 'main.html',
-//									createNew:true
-//								});
+				localStorage.setItem("login_state", 0);
 
-							if(mdata.status == "success") {
-								mui.toast("登录成功！");
+				document.getElementById("loginBtn").addEventListener('tap', function() {
+					var username = document.getElementById("username").value;
+					var password = document.getElementById("password").value;
 
-								//	注册成功跳转到登录页面
-								mui.openWindow({
-									url: 'main.html',
-									id: 'main.html',
-									createNew:true,
-								});
-								
-								//	登录成功  登录状态为成功
-								localStorage.setItem("login_state",1);
-								var u_name = document.getElementById("username").value;
-								localStorage.setItem("u_name",u_name);
-								var u_id = mdata.userId;
-								localStorage.setItem("u_id",u_id);
-//								mui.toast(u_id);
-								
-								//发出退出登录给wishlish和cart页面
-								var pageFour = plus.webview.getWebviewById('a4');
-								mui.fire(pageFour,'login',{});
-								
-							} else {
-								mui.toast(mdata.data.msg);
+					//	判断输入框
+					if(username == "" || password == "") {
+						mui.toast("用户名或密码不能为空！")
+					} else {
+						//	登录请求
+						mui.ajax('http://api.msyc.com.cn/api/user/login', {
+							data: {
+								username: username,
+								password: password
+							},
+							dataType: 'json', //服务器返回json格式数据
+							type: 'post', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							headers: {
+								'Content-Type': 'application/json'
+							},
+							success: function(mdata) {
+
+								if(mdata.status == "success") {
+									mui.toast("登录成功！");
+
+									//	注册成功跳转到登录页面
+									mui.openWindow({
+										url: 'main.html',
+										id: 'main.html',
+										createNew: true,
+									});
+
+									//	登录成功  登录状态为成功
+									localStorage.setItem("login_state", 1);
+									var u_name = document.getElementById("username").value;
+									localStorage.setItem("u_name", u_name);
+									var u_id = mdata.userId;
+									localStorage.setItem("u_id", u_id);
+									//								mui.toast(u_id);
+
+									//发出退出登录给wishlish和cart页面
+									var pageFour = plus.webview.getWebviewById('a4');
+									mui.fire(pageFour, 'login', {});
+
+								} else {
+									mui.toast(mdata.data.msg);
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								//异常处理；
+								console.log(type);
 							}
-						},
-						error: function(xhr, type, errorThrown) {
-							//异常处理；
-							console.log(type);
-						}
-					});
+						});
+					}
+
 				});
-				
-				
+
 			});
 		</script>
 	</body>
