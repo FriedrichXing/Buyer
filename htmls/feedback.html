@@ -62,11 +62,12 @@
 						mui.toast("手机号或反馈不能为空");
 					} else {
 						//	访问接口
-						mui.ajax('http://api.msyc.com.cn/api/user/register', {
+						mui.ajax('http://api.msyc.com.cn/api/customer/backend', {
 							data: {
 								username: user_name,
-								contacter_phone: contacter_phone,
-								feedback_text: feedback_text
+								contact: contacter_phone,
+								content: feedback_text
+								
 							},
 							dataType: 'json', //服务器返回json格式数据
 							type: 'post', //HTTP请求类型
@@ -77,7 +78,7 @@
 							success: function(mdata) {
 
 								if(mdata.status == "success") {
-									mui.toast("提交成功！");
+									mui.toast(mdata.data.msg);
 
 								} else {
 									mui.toast(mdata.error.msg);

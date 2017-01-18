@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			#text_01 {
+				text-align: center;
+				font-size: 16px;
+				margin: 20% 0px 0px 0px;
+			}
+			
+			#jumpToMain {
+				width: 70%;
+				margin: 5% auto 0px auto;
+				display: block;
+				background-color: #41CEA9;
+				border-color: #41CEA9;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background-color: #41CEA9;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #FFFFFF;"></a>
+			<h1 class="mui-title" style="color: #FFFFFF;">支付结果</h1>
+		</header>
+		<div class="mui-content">
+			<p id="text_01">我们已短信通知卖家，请耐心等待。</p>
+			<button id="jumpToMain" class="mui-btn mui-btn-primary" type="button">返回我的订单页面</button>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function() {
+				document.getElementById("jumpToMain").addEventListener('tap', function() {
+					mui.openWindow({
+						url: 'my_orders_main.html',
+						createNew: true
+					})
+					plus.webview.getWebviewById('my_orders_main.html').reload();
+					plus.webview.getWebviewById('my_orders_sub.html').reload();
+				})
+			})
+		</script>
+	</body>
+
+</html>

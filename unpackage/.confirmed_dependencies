@@ -130,7 +130,8 @@
 			"htmls/login.html",
 			"htmls/address.html",
 			"htmls/my_orders_main.html",
-			"htmls/feedback.html"
+			"htmls/feedback.html",
+			"htmls/join_in.html"
 		]
 	},
 	"htmls/login.html": {
@@ -223,7 +224,9 @@
 			"js/city.data.js",
 			"css/mui.poppicker.css",
 			"css/mui.picker.css",
-			"js/city.data-3.js"
+			"js/city.data-3.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
 		],
 		"refer": [
 			"htmls/address.html"
@@ -259,7 +262,8 @@
 		"resources": [
 			"images/aaa.jpg",
 			"js/mui.min.js",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"fonts/mui.ttf"
 		],
 		"refer": [
 			"htmls/order_detail.html"
@@ -295,7 +299,9 @@
 	"htmls/order_detail.html": {
 		"resources": [
 			"images/aaa.jpg",
-			"js/mui.min.js"
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
 		],
 		"refer": [
 			"htmls/pay_mode.html"
@@ -313,11 +319,14 @@
 	},
 	"htmls/pay_mode.html": {
 		"resources": [
-			"js/mui.min.js"
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
 		],
 		"refer": [
 			"htmls/pay_mode_wechat.html",
-			"htmls/pay_mode_alipay.html"
+			"htmls/pay_mode_alipay.html",
+			"htmls/pay_mode_wechat2.html"
 		]
 	},
 	"htmls/pay_mode_wechat.html": {
@@ -325,7 +334,13 @@
 			"js/mui.min.js",
 			"images/aaa.jpg",
 			"fonts/mui.ttf",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"images/plus.png",
+			"js/mui.zoom.js",
+			"js/mui.previewimage.js"
+		],
+		"refer": [
+			"htmls/pay_result.html"
 		]
 	},
 	"htmls/feedback.html": {
@@ -338,6 +353,43 @@
 	"htmls/pay_mode_alipay.html": {
 		"resources": [
 			"images/aaa.jpg",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/mui.zoom.js",
+			"js/mui.previewimage.js",
+			"images/plus.png"
+		],
+		"refer": [
+			"htmls/pay_result.html"
+		]
+	},
+	"htmls/pay_mode_wechat2.html": {
+		"resources": [
+			"js/mui.zoom.js",
+			"js/mui.previewimage.js",
+			"images/plus.png",
+			"images/aaa.jpg",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/jquery.min.js"
+		]
+	},
+	"htmls/pay_result.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"htmls/main.html",
+			"htmls/my_orders_main.html"
+		]
+	},
+	"htmls/join_in.html": {
+		"resources": [
+			"images/joinin.JPG",
 			"js/mui.min.js",
 			"fonts/mui.ttf",
 			"css/mui.min.css"

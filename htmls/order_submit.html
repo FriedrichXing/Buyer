@@ -377,9 +377,14 @@
 									if(mdata.status == "success") {
 										//	订单提交成功应该返回一个ordernum便于后面进行付款操作
 										mui.toast("提交订单成功！");
+										
+										var ordernum  = mdata.data.ordernum;
 
 										mui.openWindow({
 											url: 'pay_mode.html',
+											extras:{
+												ordernum:ordernum
+											},
 											createNew: true
 										});
 									} else {

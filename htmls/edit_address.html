@@ -174,10 +174,15 @@
 							if(mdata.status == "success") {
 								mui.toast("更新收获地址成功！");
 
-								mui.openWindow({
-									url: 'address.html',
-									createNew: true
-								});
+//								mui.openWindow({
+//									url: 'address.html',
+//									createNew: true
+//								});
+								var view = plus.webview.getWebviewById('address.html');
+								view.reload();
+								mui.back();
+								
+								
 							} else {
 								mui.toast(mdata.error.msg);
 							}

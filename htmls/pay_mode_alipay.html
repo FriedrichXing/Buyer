@@ -6,44 +6,265 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
-		
+
 		<style type="text/css">
 			#erweima {
 				width: 70%;
 				height: ?;
 				display: block;
-				margin: 10% auto 8% auto;
+				margin: 8% auto 5% auto;
 			}
-			#text_01{
+			
+			#text_01 {
 				text-align: center;
 				font-size: 16px;
 			}
-			.mui-btn{
+			
+			.mui-btn {
+				width: 70%;
 				background-color: #41CEA9;
 				border-color: #41CEA9;
 			}
+			
+			#pingzhen {
+				width: 70%;
+				margin: 10px auto 0px auto;
+				display: block;
+			}
+			
+			#submit {
+				width: 70%;
+				margin: 10px auto 0px auto;
+				display: block;
+			}
+			
+			.mui-content {
+				padding-bottom: 30px;
+			}
+			
+			.mui-preview-image.mui-fullscreen {
+				position: fixed;
+				z-index: 20;
+				background-color: #000;
+			}
+			
+			.mui-preview-header,
+			.mui-preview-footer {
+				position: absolute;
+				width: 100%;
+				left: 0;
+				z-index: 10;
+			}
+			
+			.mui-preview-header {
+				height: 44px;
+				top: 0;
+			}
+			
+			.mui-preview-footer {
+				height: 50px;
+				bottom: 0px;
+			}
+			
+			.mui-preview-header .mui-preview-indicator {
+				display: block;
+				line-height: 25px;
+				color: #fff;
+				text-align: center;
+				margin: 15px auto 4;
+				width: 70px;
+				background-color: rgba(0, 0, 0, 0.4);
+				border-radius: 12px;
+				font-size: 16px;
+			}
+			
+			.mui-preview-image {
+				display: none;
+				-webkit-animation-duration: 0.5s;
+				animation-duration: 0.5s;
+				-webkit-animation-fill-mode: both;
+				animation-fill-mode: both;
+			}
+			
+			.mui-preview-image.mui-preview-in {
+				-webkit-animation-name: fadeIn;
+				animation-name: fadeIn;
+			}
+			
+			.mui-preview-image.mui-preview-out {
+				background: none;
+				-webkit-animation-name: fadeOut;
+				animation-name: fadeOut;
+			}
+			
+			.mui-preview-image.mui-preview-out .mui-preview-header,
+			.mui-preview-image.mui-preview-out .mui-preview-footer {
+				display: none;
+			}
+			
+			.mui-zoom-scroller {
+				position: absolute;
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-box-align: center;
+				-webkit-align-items: center;
+				align-items: center;
+				-webkit-box-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				-webkit-backface-visibility: hidden;
+			}
+			
+			.mui-zoom {
+				-webkit-transform-style: preserve-3d;
+				transform-style: preserve-3d;
+			}
+			
+			.mui-slider .mui-slider-group .mui-slider-item img {
+				width: auto;
+				height: auto;
+				max-width: 100%;
+				max-height: 100%;
+			}
+			
+			.mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
+				width: 100%;
+			}
+			
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item {
+				display: inline-table;
+			}
+			
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
+				display: table-cell;
+				vertical-align: middle;
+			}
+			
+			.mui-preview-loading {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				display: none;
+			}
+			
+			.mui-preview-loading.mui-active {
+				display: block;
+			}
+			
+			.mui-preview-loading .mui-spinner-white {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-left: -25px;
+				margin-top: -25px;
+				height: 50px;
+				width: 50px;
+			}
+			
+			.mui-preview-image img.mui-transitioning {
+				-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+				transition: transform 0.5s ease, opacity 0.5s ease;
+			}
+			
+			@-webkit-keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+				100% {
+					opacity: 1;
+				}
+			}
+			
+			@keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+				100% {
+					opacity: 1;
+				}
+			}
+			
+			@-webkit-keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+			
+			@keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+			
+			p img {
+				max-width: 100%;
+				height: auto;
+			}
 		</style>
+
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav" style="background-color: #41CEA9;">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #FFFFFF;"></a>
-			<h1 class="mui-title" style="color: #FFFFFF;">支付宝支付</h1>
+			<h1 class="mui-title" style="color: #FFFFFF;">微信支付</h1>
 		</header>
 		<div class="mui-content">
 			<img id="erweima" src="../images/aaa.jpg" />
 			<p id="text_01">扫描屏幕上方的二维码完成付款</p>
 			<div id="btn_holder">
 				<div class="mui-button-row">
-					<button class="mui-btn mui-btn-primary" type="button">已经完成支付</button>&nbsp;&nbsp;
-					<button class="mui-btn mui-btn-primary" type="button">另一个按钮</button>
+					<a href="#picture" class="mui-btn mui-btn-primary" type="button">点击添加支付凭证</a>
 				</div>
 			</div>
+			
+			<form  enctype="multipart/form-data" method="post">
+				<img id="pingzhen" src="../images/plus.png" data-preview-src="" data-preview-group="1" />
+			</form>
+			
+			<button id="submit" class="mui-btn mui-btn-primary" type="button">上传凭证并短信通知卖家</button>
 		</div>
-		
+
+		<div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
+			<ul class="mui-table-view">
+				<!--<li class="mui-table-view-cell">
+					<a id="camera" href="#">拍照或录像</a>
+				</li>-->
+				<li class="mui-table-view-cell">
+					<a id="album" href="#">从相册选择</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<a href="#picture"><b>取消</b></a>
+				</li>
+			</ul>
+		</div>
+	
+	<!--<script src="http://cdn.bootcss.com/jquery/3.1.1/core.js"></script>-->
 		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript" src="../js/mui.previewimage.js"></script>
+		<script type="text/javascript" src="../js/mui.zoom.js"></script>
 		<script type="text/javascript">
+			mui.previewImage();
 			mui.init();
+			var ordernum;
 			window.onload = function() {
 				//从服务器获取数据
 				mui.ajax('http://api.msyc.com.cn/api/pay/1', {
@@ -53,7 +274,7 @@
 					success: function(mdata) {
 						if(mdata.status == "success") {
 							document.getElementById("erweima").src = mdata.data.img;
-							
+
 							//业务数据获取完毕，并已插入当前页面DOM；
 							//注意：若为ajax请求，则需将如下代码放在处理完ajax响应数据之后；
 							mui.plusReady(function() {
@@ -61,6 +282,23 @@
 								plus.nativeUI.closeWaiting();
 								//显示当前页面
 								mui.currentWebview.show();
+
+								//	上个页面传来的订单号
+								var self = plus.webview.currentWebview();
+								ordernum = self.ordernum;
+
+								//	添加相册图片
+								document.getElementById("album").addEventListener('tap', function() {
+									albumImg();
+									mui('#picture').popover('hide');
+								})
+
+								//	上传凭证照片
+								document.getElementById("submit").addEventListener('tap', function() {
+									uploadimg();
+								})
+								
+								
 							});
 						} else {
 							mui.toast("访问接口出错");
@@ -70,9 +308,107 @@
 						console.log(type);
 					}
 				});
-				
 
 			}
+
+
+			var imgArray = new Array();
+			var newImgbase;
+			
+			function albumImg() {
+				
+				plus.gallery.pick(
+					function(path) {
+						var img_my = document.getElementById("pingzhen");
+						img_my.src = path;
+
+						img_my.onload = function() {
+							var data = getBase64Image(img_my);
+							//							console.log("data:"+data);
+							newImgbase = data.split(",")[1];
+							//							console.log("newImgbase:"+newImgbase);
+							imgArray.push(newImgbase);
+						}
+					},
+					function(e) {
+						mui.toast('取消选择');
+					});
+			}
+			
+			var imgUrl;
+			var newImgUrl;
+			function uploadimg() {
+				var imgJson = JSON.stringify(imgArray);
+//				console.log(imgJson);
+//				console.log(newImgbase);
+
+				mui.ajax("http://api.msyc.com.cn/api/pay/pic", {
+					data: {
+						image: newImgbase,
+					},
+					type: 'post',
+					timeout: 10000,
+					dataType: 'json',
+					success: function(mdata) {
+//						mui.toast(mdata.status);
+						if(mdata.status == "success"){
+//							mui.toast("凭证上传成功！");
+							imgUrl = mdata.data.msg;
+							
+							newImgUrl = imgUrl.split("n")[1];
+							console.log(newImgUrl);
+							console.log(ordernum);
+							
+							//	短信通知卖家
+							sendNotice();
+							
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						console.log(JSON.stringify(xhr));
+					}
+				});
+			}
+
+			//base64编码    
+			function getBase64Image(img) {
+				var canvas = document.createElement("canvas"); //创建canvas DOM元素，并设置其宽高和图片一样
+				canvas.width = img.width;
+				canvas.height = img.height;
+				var ctx = canvas.getContext("2d");
+				ctx.drawImage(img, 0, 0, img.width, img.height); //使用画布画图
+				var ext = img.src.substring(img.src.lastIndexOf(".") + 1).toLowerCase(); //动态截取图片的格式
+				var dataURL = canvas.toDataURL("image/" + ext); //返回的是一串Base64编码的URL并指定格式
+				return dataURL;
+			}
+			
+			function sendNotice(){
+				mui.ajax("http://api.msyc.com.cn/api/pay/notice", {
+					data: {
+						username: localStorage.getItem("u_name"),
+						pic:newImgUrl,
+						ordernum:ordernum
+					},
+					type: 'post',
+					timeout: 10000,
+					dataType: 'json',
+					success: function(mdata) {
+//						mui.toast(mdata.status);
+						if(mdata.status == "success"){
+							mui.toast(mdata.data.msg);
+							mui.openWindow({
+								url:'pay_result.html',
+								createNew:true
+							})
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						console.log(JSON.stringify(xhr));
+					}
+				});
+			}
+			
+			
 		</script>
 	</body>
 

@@ -131,6 +131,9 @@
 							if(e.index == 1) {
 								mui.openWindow({
 									url: 'pay_mode.html',
+									extras:{
+										ordernum:document.getElementById("ordernum").innerHTML
+									},
 									createNew: true
 								});
 

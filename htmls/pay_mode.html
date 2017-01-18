@@ -51,11 +51,19 @@
 			mui.init();
 			
 			mui.plusReady(function(){
+				
+				//	上个页面传来的订单号
+				var self = plus.webview.currentWebview();
+				var ordernum = self.ordernum;
+				
 				//	微信支付
 				document.getElementById("wechat").addEventListener('tap',function(){
 					mui.openWindow({
 						url:'pay_mode_wechat.html',
 						createNew:true,
+						extras:{
+							ordernum:ordernum,
+						},
 						show:{
 							autoShow:false
 						}
@@ -67,6 +75,9 @@
 					mui.openWindow({
 						url:'pay_mode_alipay.html',
 						createNew:true,
+						extras:{
+							ordernum:ordernum,
+						},
 						show:{
 							autoShow:false
 						}

@@ -32,12 +32,6 @@
 				display: block;
 			}
 			
-			#submit {
-				width: 70%;
-				margin: 10px auto 0px auto;
-				display: block;
-			}
-			
 			.mui-content {
 				padding-bottom: 30px;
 			}
@@ -230,16 +224,11 @@
 			<p id="text_01">扫描屏幕上方的二维码完成付款</p>
 			<div id="btn_holder">
 				<div class="mui-button-row">
-					<a href="#picture" class="mui-btn mui-btn-primary" type="button">点击添加支付凭证</a>
+					<a href="#picture" class="mui-btn mui-btn-primary" type="button">添加支付凭证</a>
+					<!--<button class="mui-btn mui-btn-primary" type="button">另一个按钮</button>-->
 				</div>
 			</div>
-			
-			<form  enctype="multipart/form-data" method="post">
-				<img id="pingzhen" src="../images/plus.png" data-preview-src="" data-preview-group="1" />
-				<!--<input type="file" id="pingzhen"/>-->
-			</form>
-			
-			<button id="submit" class="mui-btn mui-btn-primary" type="button">上传凭证并短信通知卖家</button>
+			<img id="pingzhen" src="../images/plus.png" data-preview-src="" data-preview-group="1" />
 		</div>
 
 		<div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
@@ -257,15 +246,13 @@
 				</li>
 			</ul>
 		</div>
-	
-	<!--<script src="http://cdn.bootcss.com/jquery/3.1.1/core.js"></script>-->
+
 		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript" src="../js/mui.previewimage.js"></script>
 		<script type="text/javascript" src="../js/mui.zoom.js"></script>
 		<script type="text/javascript">
 			mui.previewImage();
 			mui.init();
-			var ordernum;
 			window.onload = function() {
 				//从服务器获取数据
 				mui.ajax('http://api.msyc.com.cn/api/pay/2', {
@@ -286,20 +273,14 @@
 
 								//	上个页面传来的订单号
 								var self = plus.webview.currentWebview();
-								ordernum = self.ordernum;
+								var ordernum = self.ordernum;
 
-								//	添加相册图片
 								document.getElementById("album").addEventListener('tap', function() {
+									//									mui.toast("222");
 									albumImg();
 									mui('#picture').popover('hide');
 								})
 
-								//	上传凭证照片
-								document.getElementById("submit").addEventListener('tap', function() {
-									uploadimg();
-								})
-								
-								
 							});
 						} else {
 							mui.toast("访问接口出错");
@@ -312,104 +293,107 @@
 
 			}
 
-
-			var imgArray = new Array();
-			var newImgbase;
-			
 			function albumImg() {
-				
-				plus.gallery.pick(
-					function(path) {
-						var img_my = document.getElementById("pingzhen");
-						img_my.src = path;
-
-						img_my.onload = function() {
-							var data = getBase64Image(img_my);
-							//							console.log("data:"+data);
-							newImgbase = data.split(",")[1];
-							//							console.log("newImgbase:"+newImgbase);
-							imgArray.push(newImgbase);
-						}
-					},
-					function(e) {
-						mui.toast('取消选择');
+				plus.gallery.pick(function(a) {
+					plus.io.resolveLocalFileSystemURL(a, function(entry) {
+						plus.io.resolveLocalFileSystemURL("_doc/", function(root) {
+							root.getFile("head.png", {}, function(file) {
+								//文件已存在 
+								file.remove(function() {
+									console.log("file remove success");
+									entry.copyTo(root, 'head.png', function(e) {
+											var e = e.fullPath + "?version=" + new Date().getTime();
+											uploadHead(e); /*上传图片*/
+											//变更大图预览的src 
+											//目前仅有一张图片，暂时如此处理，后续需要通过标准组件实现 
+										},
+										function(e) {
+											console.log('copy image fail:' + e.message);
+										});
+								}, function() {
+									console.log("delete image fail:" + e.message);
+								});
+							}, function() {
+								//文件不存在 
+								entry.copyTo(root, 'head.png', function(e) {
+										var path = e.fullPath + "?version=" + new Date().getTime();
+										uploadHead(path); /*上传图片*/
+									},
+									function(e) {
+										console.log('copy image fail:' + e.message);
+									});
+							});
+						}, function(e) {
+							console.log("get _www folder fail");
+						})
+					}, function(e) {
+						console.log("读取拍照文件错误：" + e.message);
 					});
-			}
-			
-			var imgUrl;
-			var newImgUrl;
-			function uploadimg() {
-				var imgJson = JSON.stringify(imgArray);
-//				console.log(imgJson);
-//				console.log(newImgbase);
+				}, function(a) {}, {
+					filter: "image"
+				})
+			};
 
-				mui.ajax("http://api.msyc.com.cn/api/pay/pic", {
-					data: {
-						image: newImgbase,
-					},
-					type: 'post',
-					timeout: 10000,
-					dataType: 'json',
-					success: function(mdata) {
-//						mui.toast(mdata.status);
-						if(mdata.status == "success"){
-//							mui.toast("凭证上传成功！");
-							imgUrl = mdata.data.msg;
-							
-							newImgUrl = imgUrl.split("n")[1];
-							console.log(newImgUrl);
-							console.log(ordernum);
-							
-							//	短信通知卖家
-							sendNotice();
-							
+			//上传头像图片 
+			function uploadHead(imgPath) {
+				console.log("imgPath = " + imgPath);
+				pingzhen.src = imgPath;
+				pingzhen.style.width = "70%";
+				pingzhen.style.height = "?";
+
+				var image = new Image();
+				image.src = imgPath;
+				image.onload = function() {
+					var imgData = getBase64Image(image);
+					console.log("data:" + imgData);
+					/*在这里调用上传接口*/
+					mui.ajax('http://api.msyc.com.cn/api/pay/pic', {
+						data: {
+							image: imgData,
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						success: function(mdata) {
+							if(mdata.status == "success") {
+								mui.toast("上传成功！");
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							//异常处理；
+							console.log(type);
 						}
-					},
-					error: function(xhr, type, errorThrown) {
-						console.log(JSON.stringify(xhr));
-					}
-				});
-			}
+					});
 
-			//base64编码    
+				}
+			}
+			//将图片压缩转成base64 
 			function getBase64Image(img) {
-				var canvas = document.createElement("canvas"); //创建canvas DOM元素，并设置其宽高和图片一样
-				canvas.width = img.width;
-				canvas.height = img.height;
-				var ctx = canvas.getContext("2d");
-				ctx.drawImage(img, 0, 0, img.width, img.height); //使用画布画图
-				var ext = img.src.substring(img.src.lastIndexOf(".") + 1).toLowerCase(); //动态截取图片的格式
-				var dataURL = canvas.toDataURL("image/" + ext); //返回的是一串Base64编码的URL并指定格式
-				return dataURL;
-			}
-			
-			function sendNotice(){
-				mui.ajax("http://api.msyc.com.cn/api/pay/notice", {
-					data: {
-						username: localStorage.getItem("u_name"),
-						pic:newImgUrl,
-						ordernum:ordernum
-					},
-					type: 'post',
-					timeout: 10000,
-					dataType: 'json',
-					success: function(mdata) {
-//						mui.toast(mdata.status);
-						if(mdata.status == "success"){
-							mui.toast(mdata.data.msg);		
-							mui.openWindow({
-								url:'pay_result.html',
-								createNew:true
-							})
-						}
-					},
-					error: function(xhr, type, errorThrown) {
-						console.log(JSON.stringify(xhr));
+				var canvas = document.createElement("canvas");
+				var width = img.width;
+				var height = img.height;
+				// calculate the width and height, constraining the proportions 
+				if(width > height) {
+					if(width > 100) {
+						height = Math.round(height *= 100 / width);
+						width = 100;
 					}
-				});
+				} else {
+					if(height > 100) {
+						width = Math.round(width *= 100 / height);
+						height = 100;
+					}
+				}
+				canvas.width = width; /*设置新的图片的宽度*/
+				canvas.height = height; /*设置新的图片的长度*/
+				var ctx = canvas.getContext("2d");
+				ctx.drawImage(img, 0, 0, width, height); /*绘图*/
+				var dataURL = canvas.toDataURL("image/png", 0.8);
+				return dataURL.replace("data:image/png;base64,", "");
 			}
-			
-			
 		</script>
 	</body>
 
