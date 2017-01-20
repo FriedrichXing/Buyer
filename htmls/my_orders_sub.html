@@ -36,8 +36,8 @@
 			}
 			
 			.order_state {
-				color: #41CEA9;
-				font-weight: bold;
+				color: indianred;
+				/*font-weight: bold;*/
 				font-size: 16px;
 			}
 			
@@ -79,17 +79,15 @@
 					}
 				}
 			});
-			
-			
 
 			/**
 			 * 下拉刷新具体业务实现
 			 */
 			function pulldownRefresh() {
 				setTimeout(function() {
-					var table = document.body.querySelector('.mui-table-view');
-					pullupRefresh();
-					mui.toast("刷新成功！")
+					var view = plus.webview.getWebviewById('my_orders_sub.html');
+					view.reload();
+					mui.toast("刷新成功！");
 					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
 				}, 500);
 			}
@@ -129,7 +127,7 @@
 									'<p class="mui-ellipsis good_title">' + mdata.data[i].attrstr.title +
 									'</p><div>' +
 									'<img class="mui-media-object mui-pull-left picurl" src="' + mdata.data[i].attrstr.picurl + '" />' +
-									'<div class="mui-media-body" style="font-size: 15px; background-color: rgba(0, 0, 0, 0.05);padding:10px 5px 10px 5px;margin-top: 10px;margin-bottom: 10px;">' +
+									'<div class="mui-media-body" style="font-size: 15px; background-color: rgba(239, 239, 244, 0.65);padding:10px 5px 10px 5px;margin-top: 10px;margin-bottom: 10px;">' +
 									'<span class="mui-ellipsis">规格:<span>' + mdata.data[i].attrstr.goodsid + '</span></span><br />' +
 									'<span>订单编号:<span class="mui-ellipsis">' + mdata.data[i].ordernum + '</span></span><br />' +
 									'<span>总金额:<span class="mui-ellipsis">' + mdata.data[i].amount + '</span></span><br /></div></div>' +
@@ -152,7 +150,7 @@
 				mui('#OA_task_1').on('tap', '.mui-table-view-cell',
 					function() {
 						var id = this.getAttribute('id');
-//												mui.toast(id);
+						//												mui.toast(id);
 						//	打开订单详情页面
 						mui.openWindow({
 							url: 'order_detail.html',
@@ -160,9 +158,9 @@
 							extras: {
 								orderid: id
 							},
-							createNew:true
+							createNew: true
 						});
-						
+
 					});
 			});
 

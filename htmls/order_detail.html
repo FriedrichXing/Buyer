@@ -181,11 +181,14 @@
 						var btnArray = ['否', '是'];
 						mui.confirm('是否确认收货？', '骑境商城', btnArray, function(e) {
 							if(e.index == 1) {
-								document.getElementById("order_state").innerText = "申请退货";
 								//	确认收货接口
-								mui.ajax('http://api.msyc.com.cn/api/user/register', {
+//								console.log(localStorage.getItem('u_id'));
+//								console.log(document.getElementById("ordernum").innerHTML);
+								mui.ajax('http://api.msyc.com.cn/api/order/getGoods', {
 									data: {
-										confirm: 1
+										userid: localStorage.getItem('u_id'),
+										username: localStorage.getItem('u_name'),
+										ordernum:document.getElementById("ordernum").innerHTML
 									},
 									dataType: 'json', //服务器返回json格式数据
 									type: 'post', //HTTP请求类型
@@ -197,6 +200,7 @@
 
 										if(mdata.status == "success") {
 											//	确认收获申请发出，成功
+											mui.toast("确认收货成功！")
 											document.getElementById("order_state").innerText = "申请退货";
 										}
 									},
@@ -214,11 +218,12 @@
 						var btnArray = ['否', '是'];
 						mui.confirm('是否申请退货？', '骑境商城', btnArray, function(e) {
 							if(e.index == 1) {
-								document.getElementById("order_state").innerText = "暂无操作";
 								//	申请退货接口
-								mui.ajax('http://api.msyc.com.cn/api/user/register', {
+								mui.ajax('http://api.msyc.com.cn/api/order/applyReturn', {
 									data: {
-										confirm: 1
+										userid: localStorage.getItem('u_id'),
+										username: localStorage.getItem('u_name'),
+										ordernum:document.getElementById("ordernum").innerHTML
 									},
 									dataType: 'json', //服务器返回json格式数据
 									type: 'post', //HTTP请求类型
@@ -230,7 +235,8 @@
 
 										if(mdata.status == "success") {
 											//	退货申请请求，成功
-											document.getElementById("order_state").innerText = "暂无操作";
+											mui.toast("申请退货成功！请尽快将货物寄回...")
+											document.getElementById("order_state").innerText = "申请退货,待确认";
 										}
 									},
 									error: function(xhr, type, errorThrown) {
