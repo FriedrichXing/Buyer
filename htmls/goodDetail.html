@@ -400,7 +400,7 @@
 						//						mui.toast(specification_id);
 
 						if(color_send == "" || specification_send == "") {
-								mui('#picture').popover('show');
+							mui('#picture').popover('show');
 						} else {
 							mui.openWindow({
 								url: 'order_submit.html',
@@ -424,12 +424,20 @@
 			});
 
 			mui('body').on('shown', '.mui-popover', function(e) {
-				console.log('shown', e.detail.id); //detail为当前popover元素
+				console.log('shown', e.detail.id);  //detail为当前popover元素
 			});
 			mui('body').on('tap', '#queren', function(e) {
 				console.log('hidden', e.detail.id); //detail为当前popover元素
-				mui('#picture').popover('hide');
-				document.getElementById("specs_chosen").innerText = "已经选择\"" + color_send + "\",\"" + specification_send + "\"";
+
+				if(color_send == "") {
+					mui.toast("请选择颜色")
+				} else if(specification_send == "") {
+					mui.toast("请选择规格")
+				} else {
+					mui('#picture').popover('hide');
+					document.getElementById("specs_chosen").innerText = "已经选择\"" + color_send + "\",\"" + specification_send + "\"";
+				}
+
 			});
 
 			//获得slider插件对象

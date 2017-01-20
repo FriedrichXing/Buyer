@@ -8,14 +8,8 @@
 		<link href="../css/mui.min.css" rel="stylesheet" />
 
 		<style type="text/css">
-			#erweima {
-				width: 70%;
-				height: ?;
-				display: block;
-				margin: 8% auto 5% auto;
-			}
-			
 			#text_01 {
+				margin-top: 10%;
 				text-align: center;
 				font-size: 16px;
 			}
@@ -223,21 +217,21 @@
 	<body>
 		<header class="mui-bar mui-bar-nav" style="background-color: #41CEA9;">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #FFFFFF;"></a>
-			<h1 class="mui-title" style="color: #FFFFFF;">支付宝支付</h1>
+			<h1 class="mui-title" style="color: #FFFFFF;">重新提交支付凭证</h1>
 		</header>
 		<div class="mui-content">
-			<img id="erweima" src="../images/aaa.jpg" />
-			<p id="text_01">扫描屏幕上方的二维码完成付款</p>
+			<p id="text_01">请重新提交您的支付凭证</p>
 			<div id="btn_holder">
 				<div class="mui-button-row">
 					<a href="#picture" class="mui-btn mui-btn-primary" type="button">点击添加支付凭证</a>
 				</div>
 			</div>
-			
-			<form  enctype="multipart/form-data" method="post">
+
+			<form enctype="multipart/form-data" method="post">
 				<img id="pingzhen" src="../images/plus.png" data-preview-src="" data-preview-group="1" />
+				<!--<input type="file" id="pingzhen"/>-->
 			</form>
-			
+
 			<button id="submit" class="mui-btn mui-btn-primary" type="button">上传凭证并短信通知卖家</button>
 		</div>
 
@@ -256,8 +250,8 @@
 				</li>
 			</ul>
 		</div>
-	
-	<!--<script src="http://cdn.bootcss.com/jquery/3.1.1/core.js"></script>-->
+
+		<!--<script src="http://cdn.bootcss.com/jquery/3.1.1/core.js"></script>-->
 		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript" src="../js/mui.previewimage.js"></script>
 		<script type="text/javascript" src="../js/mui.zoom.js"></script>
@@ -265,58 +259,30 @@
 			mui.previewImage();
 			mui.init();
 			var ordernum;
-			window.onload = function() {
-				//从服务器获取数据
-				mui.ajax('http://api.msyc.com.cn/api/pay/1', {
-					dataType: 'json', //服务器返回json格式数据
-					type: 'get', //HTTP请求类型
-					timeout: 10000, //超时时间设置为10秒；
-					success: function(mdata) {
-						if(mdata.status == "success") {
-							document.getElementById("erweima").src = mdata.data.img;
+			mui.plusReady(function() {
 
-							//业务数据获取完毕，并已插入当前页面DOM；
-							//注意：若为ajax请求，则需将如下代码放在处理完ajax响应数据之后；
-							mui.plusReady(function() {
-								//关闭等待框
-								plus.nativeUI.closeWaiting();
-								//显示当前页面
-								mui.currentWebview.show();
+				//	上个页面传来的订单号
+				var self = plus.webview.currentWebview();
+				ordernum = self.ordernum;
 
-								//	上个页面传来的订单号
-								var self = plus.webview.currentWebview();
-								ordernum = self.ordernum;
+				//	添加相册图片
+				document.getElementById("album").addEventListener('tap', function() {
+					albumImg();
+					mui('#picture').popover('hide');
+				})
 
-								//	添加相册图片
-								document.getElementById("album").addEventListener('tap', function() {
-									albumImg();
-									mui('#picture').popover('hide');
-								})
+				//	上传凭证照片
+				document.getElementById("submit").addEventListener('tap', function() {
+					uploadimg();
+				})
 
-								//	上传凭证照片
-								document.getElementById("submit").addEventListener('tap', function() {
-									uploadimg();
-								})
-								
-								
-							});
-						} else {
-							mui.toast("访问接口出错");
-						}
-					},
-					error: function(xhr, type, errorThrown) { //异常处理；
-						console.log(type);
-					}
-				});
-
-			}
-
+			});
 
 			var imgArray = new Array();
 			var newImgbase;
-			
+
 			function albumImg() {
-				
+
 				plus.gallery.pick(
 					function(path) {
 						var img_my = document.getElementById("pingzhen");
@@ -334,13 +300,14 @@
 						mui.toast('取消选择');
 					});
 			}
-			
+
 			var imgUrl;
 			var newImgUrl;
+
 			function uploadimg() {
 				var imgJson = JSON.stringify(imgArray);
-//				console.log(imgJson);
-//				console.log(newImgbase);
+				//				console.log(imgJson);
+				//				console.log(newImgbase);
 
 				mui.ajax("http://api.msyc.com.cn/api/pay/pic", {
 					data: {
@@ -350,18 +317,18 @@
 					timeout: 10000,
 					dataType: 'json',
 					success: function(mdata) {
-//						mui.toast(mdata.status);
-						if(mdata.status == "success"){
-//							mui.toast("凭证上传成功！");
+						//						mui.toast(mdata.status);
+						if(mdata.status == "success") {
+							//							mui.toast("凭证上传成功！");
 							imgUrl = mdata.data.msg;
-							
+
 							newImgUrl = imgUrl.split("n")[1];
 							console.log(newImgUrl);
 							console.log(ordernum);
-							
+
 							//	短信通知卖家
 							sendNotice();
-							
+
 						}
 					},
 					error: function(xhr, type, errorThrown) {
@@ -381,25 +348,25 @@
 				var dataURL = canvas.toDataURL("image/" + ext); //返回的是一串Base64编码的URL并指定格式
 				return dataURL;
 			}
-			
-			function sendNotice(){
+
+			function sendNotice() {
 				mui.ajax("http://api.msyc.com.cn/api/pay/notice", {
 					data: {
 						username: localStorage.getItem("u_name"),
-						pic:newImgUrl,
-						ordernum:ordernum
+						pic: newImgUrl,
+						ordernum: ordernum
 					},
 					type: 'post',
 					timeout: 10000,
 					dataType: 'json',
 					success: function(mdata) {
-//						mui.toast(mdata.status);
-						if(mdata.status == "success"){
+						//						mui.toast(mdata.status);
+						if(mdata.status == "success") {
 							mui.toast(mdata.data.msg);
 							mui.openWindow({
-								url:'pay_result.html',
-								createNew:true
-							})
+								url: 'pay_result.html',
+								createNew: true
+							});
 						}
 					},
 					error: function(xhr, type, errorThrown) {
@@ -407,8 +374,6 @@
 					}
 				});
 			}
-			
-			
 		</script>
 	</body>
 

@@ -117,6 +117,15 @@
 						document.getElementById("cost").innerHTML = mdata.data[0].cost;
 						document.getElementById("amount").innerHTML = mdata.data[0].amount;
 						document.getElementById("order_state").innerText = mdata.data[0].status;
+						
+						if(mdata.data[0].status == "等待收货"){
+							document.getElementById("order_state").innerText = "确认收货";
+						}else if(mdata.data[0].status == "等待归档"){
+							document.getElementById("order_state").innerText = "申请退货";
+						}
+						
+						
+						
 
 					},
 					error: function(xhr, type, errorThrown) { //异常处理；
@@ -125,14 +134,18 @@
 				});
 
 				document.getElementById("order_state").addEventListener('tap', function() {
-					if(document.getElementById("order_state").innerText == "等待付款") {
+
+					var status = document.getElementById("order_state").innerText;
+
+					//	等待付款
+					if(status == "等待付款") {
 						var btnArray = ['否', '是'];
 						mui.confirm('您还未付款，是否现在付款？', '骑境商城', btnArray, function(e) {
 							if(e.index == 1) {
 								mui.openWindow({
 									url: 'pay_mode.html',
-									extras:{
-										ordernum:document.getElementById("ordernum").innerHTML
+									extras: {
+										ordernum: document.getElementById("ordernum").innerHTML
 									},
 									createNew: true
 								});
@@ -141,10 +154,109 @@
 								mui.toast("取消。。");
 							}
 						});
+
+						//	已付款，待确认
+					} else if(status == "已付款,待审核") {
+						mui.toast("请耐心等待卖家审核...");
+
+						//	审核失败，重新审核
+					} else if(status == "审核失败,重新提交") {
+						mui.openWindow({
+							url: 'paycert_resubmit.html',
+							extras: {
+								ordernum: document.getElementById("ordernum").innerHTML
+							},
+							createNew: true
+						})
+
+						//	审核通过，待发货
+					} else if(status == "已审核,待发货") {
+						mui.toast("请耐心等待卖家发货...")
+
+					} else if(status == "等待发货") {
+						mui.toast("请耐心等待卖家发货...")
+
+						//	确认收货
+					} else if(status == "确认收货") {
+						var btnArray = ['否', '是'];
+						mui.confirm('是否确认收货？', '骑境商城', btnArray, function(e) {
+							if(e.index == 1) {
+								document.getElementById("order_state").innerText = "申请退货";
+								//	确认收货接口
+								mui.ajax('http://api.msyc.com.cn/api/user/register', {
+									data: {
+										confirm: 1
+									},
+									dataType: 'json', //服务器返回json格式数据
+									type: 'post', //HTTP请求类型
+									timeout: 10000, //超时时间设置为10秒；
+									headers: {
+										'Content-Type': 'application/json'
+									},
+									success: function(mdata) {
+
+										if(mdata.status == "success") {
+											//	确认收获申请发出，成功
+											document.getElementById("order_state").innerText = "申请退货";
+										}
+									},
+									error: function(xhr, type, errorThrown) {
+										//异常处理；
+										console.log(type);
+									}
+								});
+
+							} else {
+								mui.toast("取消。。");
+							}
+						});
+					} else if(status == "申请退货") {
+						var btnArray = ['否', '是'];
+						mui.confirm('是否申请退货？', '骑境商城', btnArray, function(e) {
+							if(e.index == 1) {
+								document.getElementById("order_state").innerText = "暂无操作";
+								//	申请退货接口
+								mui.ajax('http://api.msyc.com.cn/api/user/register', {
+									data: {
+										confirm: 1
+									},
+									dataType: 'json', //服务器返回json格式数据
+									type: 'post', //HTTP请求类型
+									timeout: 10000, //超时时间设置为10秒；
+									headers: {
+										'Content-Type': 'application/json'
+									},
+									success: function(mdata) {
+
+										if(mdata.status == "success") {
+											//	退货申请请求，成功
+											document.getElementById("order_state").innerText = "暂无操作";
+										}
+									},
+									error: function(xhr, type, errorThrown) {
+										//异常处理；
+										console.log(type);
+									}
+								});
+
+							} else {
+								mui.toast("取消。。");
+							}
+						});
+					} else if(status == "暂无操作"){
+						mui.toast("请耐心等候...")
 					} else {
-						mui.toast("哈哈哈");
+						mui.toast("请耐心等待...+1");
 					}
 				});
+
+				//	重写back方法，返回上个页面刷新列表内容
+				var old_back = mui.back;
+				mui.back = function() {
+					var view = plus.webview.getWebviewById('my_orders_sub.html');
+					view.reload();
+					old_back();
+				}
 
 			});
 		</script>

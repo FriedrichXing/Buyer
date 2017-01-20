@@ -65,7 +65,7 @@
 					type: 'get', //HTTP请求类型
 					timeout: 10000, //超时时间设置为10秒；
 					success: function(mdata) {
-						count2 = mdata.data.length % 3 + 1;
+						count2 = mdata.data.length / 6 + 1;
 						setTimeout(function() {
 							mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > count2)); //参数为true代表没有更多数据了。
 							var table = document.body.querySelector('.mui-table-view');

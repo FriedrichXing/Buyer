@@ -161,6 +161,9 @@
 							if(mdata.status == "success") {
 								mui.toast("添加收获地址成功！");
 								
+								console.log(prov+city+country);
+								
+								
 								if(whichPage == 0){
 									var view = plus.webview.getWebviewById('address.html');
 								}else if(whichPage == 1){

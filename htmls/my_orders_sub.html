@@ -79,6 +79,8 @@
 					}
 				}
 			});
+			
+			
 
 			/**
 			 * 下拉刷新具体业务实现
@@ -109,7 +111,7 @@
 						if(mdata.data == "") {
 							mui.toast("您还没有订单..")
 						}
-						count2 = mdata.data.length % 3 + 2;
+						count2 = mdata.data.length / 4 + 1;
 						setTimeout(function() {
 							mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > count2)); //参数为true代表没有更多数据了。
 							var table = document.body.querySelector('.mui-table-view');
@@ -124,8 +126,8 @@
 									'<a class="mui-btn mui-btn-red">删除</a>' +
 									'</div>' +
 									'<div class="mui-slider-handle">' +
-									'<span class="mui-ellipsis good_title">' + mdata.data[i].attrstr.title +
-									'</span><div>' +
+									'<p class="mui-ellipsis good_title">' + mdata.data[i].attrstr.title +
+									'</p><div>' +
 									'<img class="mui-media-object mui-pull-left picurl" src="' + mdata.data[i].attrstr.picurl + '" />' +
 									'<div class="mui-media-body" style="font-size: 15px; background-color: rgba(0, 0, 0, 0.05);padding:10px 5px 10px 5px;margin-top: 10px;margin-bottom: 10px;">' +
 									'<span class="mui-ellipsis">规格:<span>' + mdata.data[i].attrstr.goodsid + '</span></span><br />' +
@@ -160,6 +162,7 @@
 							},
 							createNew:true
 						});
+						
 					});
 			});
 

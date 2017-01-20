@@ -83,6 +83,7 @@
 				color: red;
 				margin-bottom: 10px;
 			}
+			
 			.mui-table-view.mui-grid-view .mui-table-view-cell .mui-media-body .price-price {
 				margin-top: 12px;
 				float: left;
@@ -97,13 +98,14 @@
 				font-size: 1.1em;
 				margin-right: 7%;
 			}
+			
 			.mui-table-view.mui-grid-view .mui-table-view-cell .mui-media-body .price-weight {
 				margin-top: 12px;
 				float: right;
 				font-size: 1.1em;
 			}
 			
-			.good_title{
+			.good_title {
 				margin-left: 7%;
 			}
 			
@@ -233,32 +235,28 @@
 		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init({
-				 preloadPages:[
-                        {
-                          url:'pageTwo.html',
-                          id:'a2',
-                          styles:{
-                             top:'0px',
-                            bottom:'50px'
-                          }
-                        },
-                        {
-                          url:'pageThree.html',
-                          id:'a3',
-                          styles:{
-                             top:'0px',
-                            bottom:'50px'
-                          }
-                        },
-                        {
-                          url:'pageFour.html',
-                          id:'a4',
-                          styles:{
-                             top:'0px',
-                            bottom:'50px'
-                          }
-                        }
-                    ]
+				preloadPages: [{
+					url: 'pageTwo.html',
+					id: 'a2',
+					styles: {
+						top: '0px',
+						bottom: '50px'
+					}
+				}, {
+					url: 'pageThree.html',
+					id: 'a3',
+					styles: {
+						top: '0px',
+						bottom: '50px'
+					}
+				}, {
+					url: 'pageFour.html',
+					id: 'a4',
+					styles: {
+						top: '0px',
+						bottom: '50px'
+					}
+				}]
 			});
 
 			mui.plusReady(function() {
@@ -268,8 +266,18 @@
 				var winAll = plus.webview.all(); //获取所有窗体
 				var a1, a2, a3, a4;
 				mui("#nav").on("tap", "#a1", function() { //点击触发
-					//					a1 = plus.webview.getWebviewById("a1");
+					//					a1 = plus.webview.getWebviewById("main.html");
 					//					a1.show();
+					mui.openWindow({
+						url: 'main.html',
+						show: {
+							autoShow: true, 
+							duration: 0 
+						},
+						waiting: {
+							autoShow: false,
+						}
+					})
 					a2.hide();
 					a3.hide();
 					a4.hide();
@@ -286,23 +294,22 @@
 					a4 = plus.webview.getWebviewById("a4");
 					a4.show();
 				});
-				
-				
+
 				mui.ajax('http://api.msyc.com.cn/api/goods/tui', {
 					dataType: 'json', //服务器返回json格式数据
 					type: 'get', //HTTP请求类型
 					timeout: 10000, //超时时间设置为10秒；
 					success: function(mdata) {
 						var table = document.body.querySelector('#recommend');
-						for(var i = 0; i < 4; i++) {
+						for(var i = 0; i < 6; i++) {
 							var li = document.createElement('li');
 							li.className = 'mui-table-view-cell mui-media mui-col-xs-6';
 							li.id = mdata.data[i].product_id;
-						
-							li.innerHTML = '<a><div class="bgDiv"><img class="mui-media-object" src="' +mdata.data[i].picurl+'">' +
-								'<div class="mui-media-body"><p class="mui-ellipsis good_title">' +  mdata.data[i].title + '</p>' +
-								'<p class="price-one">¥<p class="price-price">' +mdata.data[i].price+'</p></p>'+
-								'<p class="price-two">kg</p><p class="price-weight">' + mdata.data[i].price +'</p>'+
+
+							li.innerHTML = '<a><div class="bgDiv"><img class="mui-media-object" src="' + mdata.data[i].picurl + '">' +
+								'<div class="mui-media-body"><p class="mui-ellipsis good_title">' + mdata.data[i].title + '</p>' +
+								'<p class="price-one">¥<p class="price-price">' + mdata.data[i].price + '</p></p>' +
+								'<p class="price-two">kg</p><p class="price-weight">' + mdata.data[i].lv1 + '</p>' +
 								'</div></div></a>';
 
 							table.appendChild(li);
@@ -312,12 +319,11 @@
 						console.log(type);
 					}
 				});
-				
-				
+
 				mui('#recommend').on('tap', '.mui-table-view-cell',
 					function() {
 						var id = this.getAttribute('id');
-//												mui.toast(id);
+						//												mui.toast(id);
 						//	打开商品详情页面
 						mui.openWindow({
 							url: 'goodDetail.html',
@@ -327,29 +333,27 @@
 							}
 						});
 					});
-					
-				document.getElementById("all").addEventListener('tap',function(){
+
+				document.getElementById("all").addEventListener('tap', function() {
 					mui.openWindow({
-						url:'goods_all_main.html',
-						createNew:true,
+						url: 'goods_all_main.html',
+						createNew: true,
 					});
 				});
-				
-				document.getElementById("te").addEventListener('tap',function(){
+
+				document.getElementById("te").addEventListener('tap', function() {
 					mui.openWindow({
-						url:'goods_te_main.html',
-						createNew:true,
+						url: 'goods_te_main.html',
+						createNew: true,
 					});
 				});
-				
-				document.getElementById("tui").addEventListener('tap',function(){
+
+				document.getElementById("tui").addEventListener('tap', function() {
 					mui.openWindow({
-						url:'goods_tui_main.html',
-						createNew:true,
+						url: 'goods_tui_main.html',
+						createNew: true,
 					});
 				});
-				
-					
 
 			});
 

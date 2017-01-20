@@ -30,20 +30,45 @@
 		</header>
 		<div class="mui-content">
 			<p id="text_01">我们已短信通知卖家，请耐心等待。</p>
-			<button id="jumpToMain" class="mui-btn mui-btn-primary" type="button">返回我的订单页面</button>
+			<button id="jumpToMain" class="mui-btn mui-btn-primary" type="button">返回首页</button>
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init();
+
 			mui.plusReady(function() {
+				var pay_mode_wechat = plus.webview.getWebviewById('pay_mode_wechat.html');
+				var pay_mode_alipay = plus.webview.getWebviewById('pay_mode_alipay.html');
+				var pay_mode = plus.webview.getWebviewById('pay_mode.html');
+				var order_detail = plus.webview.getWebviewById('order_detail.html');
+				var my_orders_main = plus.webview.getWebviewById('my_orders_main.html');
+				var order_submit = plus.webview.getWebviewById('order_submit.html');
+				var paycert_resubmit = plus.webview.getWebviewById('paycert_resubmit.html');
+				plus.webview.close(paycert_resubmit);
+				plus.webview.close(order_submit);
+				plus.webview.close(my_orders_main);
+				plus.webview.close(order_detail);
+				plus.webview.close(pay_mode);
+				plus.webview.close(pay_mode_wechat);
+				plus.webview.close(pay_mode_alipay);
+				
+				
+				
 				document.getElementById("jumpToMain").addEventListener('tap', function() {
+
+					var my_orders_main = plus.webview.getWebviewById('my_orders_main.html');
+					var my_orders_sub = plus.webview.getWebviewById('my_orders_sub.html');
+
+					plus.webview.close(my_orders_main, 0);
+					plus.webview.close(my_orders_sub, 0);
+
 					mui.openWindow({
-						url: 'my_orders_main.html',
+						url: 'main.html',
 						createNew: true
-					})
-					plus.webview.getWebviewById('my_orders_main.html').reload();
-					plus.webview.getWebviewById('my_orders_sub.html').reload();
+					});
+
 				})
+
 			})
 		</script>
 	</body>

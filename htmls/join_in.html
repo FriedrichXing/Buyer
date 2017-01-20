@@ -7,10 +7,11 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<style type="text/css">
-			img{
+			img {
 				width: 100%;
 				margin-bottom: -5px;
 			}
+			
 			#joinin {
 				width: 94%;
 				height: 45px;
@@ -28,13 +29,21 @@
 			<h1 class="mui-title" style="color: #FFFFFF;">加盟我们</h1>
 		</header>
 		<div class="mui-content">
-		    <img src="../images/joinin.JPG" />
-		    <button id="joinin" class="mui-btn mui-btn-primary" type="button">立即申请</button>
+			<img src="../images/joinin.JPG" />
+			<button id="joinin" class="mui-btn mui-btn-primary" type="button">立即申请</button>
 		</div>
-		
+
 		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
-			mui.init()
+			mui.init();
+			mui.plusReady(function() {
+				document.getElementById("joinin").addEventListener('tap', function() {
+					mui.openWindow({
+						url: 'join_in_requirement.html',
+						createNew: true
+					})
+				})
+			})
 		</script>
 	</body>
 

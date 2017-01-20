@@ -304,7 +304,8 @@
 			"css/mui.min.css"
 		],
 		"refer": [
-			"htmls/pay_mode.html"
+			"htmls/pay_mode.html",
+			"htmls/paycert_resubmit.html"
 		]
 	},
 	"htmls/choose_addr.html": {
@@ -393,6 +394,19 @@
 			"js/mui.min.js",
 			"fonts/mui.ttf",
 			"css/mui.min.css"
+		],
+		"refer": [
+			"htmls/join_in_requirement.html"
+		]
+	},
+	"htmls/paycert_resubmit.html": {
+		"resources": [
+			"js/mui.zoom.js",
+			"js/mui.previewimage.js",
+			"images/plus.png"
+		],
+		"refer": [
+			"htmls/pay_result.html"
 		]
 	}
 }
