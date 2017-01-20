@@ -1,2 +1,2 @@
-# Dealer
-buyer and seller
+# Buyer
+buyer codes
