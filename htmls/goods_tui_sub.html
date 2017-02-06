@@ -47,8 +47,9 @@
 			 */
 			function pulldownRefresh() {
 				setTimeout(function() {
-					pullupRefresh();
-					mui.toast("刷新成功！")
+					var view = plus.webview.getWebviewById('goods_tui_sub.html');
+					view.reload();
+					mui.toast("刷新中请稍候...");
 					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
 				}, 500);
 			}

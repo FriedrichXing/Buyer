@@ -8,78 +8,63 @@
 		<link href="../css/mui.min.css" rel="stylesheet" />
 
 		<style>
-			.mui-control-content {
-				background-color: white;
-				/*min-height: 215px;*/
+			img{
+				width: 100%;
+			}
+			body{
+				background-color: #FFFFFF;
+			}
+			.mui-content{
+				padding: 0px 15px;
+				background-color: #FFFFFF;
+			}
+			span{
+				margin: 0px 15px 0px 15px;
+			}
+			#menu {
+				color: #FFFFFF;
 			}
 			
-			.mui-control-content .mui-loading {
-				margin-top: 50px;
+			#topPopover {
+				position: fixed;
+				top: 16px;
+				right: 6px;
 			}
-			
-			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
-				color: #41CEA9;
+			#topPopover .mui-popover-arrow {
+				left: auto;
+				right: 6px;
 			}
-			
-			.mui-segmented-control.mui-segmented-control-inverted~.mui-slider-progress-bar {
-				background-color: #41CEA9;
-			}
-			.mui-scroll{
-				padding: 10px 15px 10px 15px;
+			.mui-popover {
+				height: 140px;
+				width: 150px;
 			}
 		</style>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav" style="background-color: #41CEA9;">
-			<h1 id="news_top_title" class="mui-title" style="color: #FFFFFF;">企业宣传</h1>
+			<h1 id="top_title" class="mui-title" style="color: #FFFFFF;">企业介绍</h1>
+			<a id="menu" class="mui-action-menu mui-icon mui-icon-bars mui-pull-right" href="#topPopover"></a>
 		</header>
 		<div class="mui-content">
-			<div id="slider" class="mui-slider">
-				<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-					<a class="mui-control-item mui-active" href="#item1mobile">
-						企业介绍
-					</a>
-					<a class="mui-control-item" href="#item2mobile">
-						企业文化
-					</a>
-					<a class="mui-control-item" href="#item3mobile">
-						企业地址
-					</a>
-				</div>
-				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
-				<div class="mui-slider-group">
-					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
-						<div id="scroll1" class="mui-scroll-wrapper">
-							<div class="mui-scroll">
-								<span id="content_one"></span>
-							</div>
-						</div>
-					</div>
-					<div id="item2mobile" class="mui-slider-item mui-control-content">
-						<div id="scroll2" class="mui-scroll-wrapper">
-							<div class="mui-scroll">
-								<!--<div class="mui-loading">
-									<div class="mui-spinner">-->
-										<span id="content_two"></span>
-									<!--</div>
-								</div>-->
-							</div>
-						</div>
-
-					</div>
-					<div id="item3mobile" class="mui-slider-item mui-control-content">
-						<div id="scroll3" class="mui-scroll-wrapper">
-							<div class="mui-scroll">
-								<!--<div class="mui-loading">
-									<div class="mui-spinner">-->
-										<span id="content_three"></span>
-									<!--</div>
-								</div>-->
-							</div>
-						</div>
-
-					</div>
+			<span id="content_one"></span>
+			<span id="content_two"></span>
+			<span id="content_three"></span>
+		</div>
+		<!--右上角弹出菜单-->
+		<div id="topPopover" class="mui-popover">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view">
+						<li id="intr" class="mui-table-view-cell">
+							企业介绍
+						</li>
+						<li id="culture" class="mui-table-view-cell">企业文化
+						</li>
+						<li id="addr" class="mui-table-view-cell">企业地址
+						</li>
+					</ul>
 				</div>
 			</div>
 
@@ -89,60 +74,79 @@
 		<script type="text/javascript">
 			mui.init();
 			(function($) {
-				console.log(document.body.scrollHeight - 84);
-				$(".mui-control-content").each(function(i, element) {
-					element.style.height = (document.body.scrollHeight - 84) + "px";
-				});
-			})(mui);
-			(function($) {
-				$('.mui-scroll-wrapper').scroll({
-					indicators: true //是否显示滚动条
-				});
-
+				
 				mui.ajax('http://api.msyc.com.cn/api/jinyi/content', {
 					dataType: 'json', //服务器返回json格式数据
 					type: 'get', //HTTP请求类型
 					timeout: 10000, //超时时间设置为10秒；
 					success: function(mdata) {
 						document.getElementById("content_one").innerHTML = mdata.data[0].content;
+						document.getElementById("content_two").innerHTML = "";
+						document.getElementById("content_three").innerHTML = "";
+						document.getElementById("top_title").innerText = "企业介绍";
 					},
 					error: function(xhr, type, errorThrown) { //异常处理；
 						console.log(type);
 					}
 				});
-
-				mui.ajax('http://api.msyc.com.cn/api/jinyi/culture', {
+				
+				document.getElementById("culture").addEventListener('tap',function(){
+					mui.ajax('http://api.msyc.com.cn/api/jinyi/culture', {
 					dataType: 'json', //服务器返回json格式数据
 					type: 'get', //HTTP请求类型
 					timeout: 10000, //超时时间设置为10秒；
 					success: function(mdata) {
 						document.getElementById("content_two").innerHTML = mdata.data[0].content;
+						document.getElementById("content_one").innerHTML = "";
+						document.getElementById("content_three").innerHTML = "";
+						document.getElementById("top_title").innerText = "企业文化";
+						mui('#topPopover').popover('hide');
 					},
 					error: function(xhr, type, errorThrown) { //异常处理；
 						console.log(type);
 					}
 				});
-
-				mui.ajax('http://api.msyc.com.cn/api/jinyi/addr', {
+				})
+				
+				document.getElementById("addr").addEventListener('tap',function(){
+					mui.ajax('http://api.msyc.com.cn/api/jinyi/addr', {
 					dataType: 'json', //服务器返回json格式数据
 					type: 'get', //HTTP请求类型
 					timeout: 10000, //超时时间设置为10秒；
 					success: function(mdata) {
 						document.getElementById("content_three").innerHTML = mdata.data[0].content;
+						document.getElementById("content_one").innerHTML = "";
+						document.getElementById("content_two").innerHTML = "";
+						document.getElementById("top_title").innerText = "企业地址";
+						mui('#topPopover').popover('hide');
 					},
 					error: function(xhr, type, errorThrown) { //异常处理；
 						console.log(type);
 					}
 				});
+				})
 
-//				var sliderSegmentedControl = document.getElementById('sliderSegmentedControl');
-//				$('.mui-input-group').on('change', 'input', function() {
-//					if(this.checked) {
-//						sliderSegmentedControl.className = 'mui-slider-indicator mui-segmented-control mui-segmented-control-inverted mui-segmented-control-' + this.value;
-//						//force repaint
-//						sliderProgressBar.setAttribute('style', sliderProgressBar.getAttribute('style'));
-//					}
-//				});
+				document.getElementById("intr").addEventListener('tap',function(){
+					mui.ajax('http://api.msyc.com.cn/api/jinyi/content', {
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(mdata) {
+						document.getElementById("content_one").innerHTML = mdata.data[0].content;
+						document.getElementById("content_two").innerHTML = "";
+						document.getElementById("content_three").innerHTML = "";
+						document.getElementById("top_title").innerText = "企业介绍";
+						mui('#topPopover').popover('hide');
+					},
+					error: function(xhr, type, errorThrown) { //异常处理；
+						console.log(type);
+					}
+				});
+				})
+
+
+				
+
 			})(mui);
 		</script>
 	</body>
